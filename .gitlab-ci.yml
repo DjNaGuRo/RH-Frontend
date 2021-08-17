@@ -1,0 +1,32 @@
+image: node:12.19.0
+
+stages:
+  - build
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - npm install
+
+compile:
+  stage: build
+  script:
+    - npm run build
+  except:
+    - main
+
+
+pages:
+  stage: deploy
+  script:
+    - npm run build
+    - mkdir public
+    - cp -R dist/ui/* public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
