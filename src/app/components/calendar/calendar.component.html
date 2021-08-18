@@ -1,4 +1,14 @@
+<div class="btn-group btn-group-toggle">
+  <label class="btn-primary" ngbButtonLabel>
+    <input type="checkbox" (click)="getDaysArrayByMonth(currentMonth-2)"> Précédent
+  </label>
+  <label class="btn-primary" ngbButtonLabel>
+    <input type="checkbox" (click)="getDaysArrayByMonth(currentMonth)"> Suivant
+  </label>
+</div>
+<hr>
 <div class="table-responsive">
+  <h1>{{currentYear}}</h1>
     <table class="table">
       <thead>
         <tr>
