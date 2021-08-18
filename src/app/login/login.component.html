@@ -6,7 +6,7 @@
         <div id="login-box" class="col-md-12">
           <form id="login-form" class="form" (ngSubmit)="onSubmit($event)" [formGroup]="formLogin">
             <h3 class="text-center text-info">Login</h3>
-            <div class="form-group">
+            <div class="form-group mt-3">
               <label for="username" class="text-info">Username:</label><br>
               <input type="text" name="username" id="username" class="form-control" formControlName="username">
               <div *ngIf="submitted && formValid.username.errors" class="text-danger text-errors-email">
@@ -14,11 +14,14 @@
                 <div *ngIf="formValid.username.errors.pattern">Le champ Username ne respecte pas ...</div>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-5">
               <label for="password" class="text-info">Password:</label><br>
-              <input type="text" name="password" id="password" class="form-control" formControlName="password">
+              <input type="password" name="password" id="password" class="form-control" formControlName="password">
+              <div *ngIf="submitted && formValid.password.errors" class="text-danger text-errors-password">
+                <div *ngIf="formValid.password.errors.required">Le champ password est requis</div>
+              </div>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-5">
               <input type="submit" name="submit" class="btn btn-info btn-md" value="Valider">
             </div>
           </form>
