@@ -11,6 +11,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthComponent } from './layouts/auth/auth.component';
 import { LoginComponent } from './pages/login/login.component';
+import { DayOffFormComponent } from './components/day-off-form/day-off-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,12 +23,14 @@ import { LoginComponent } from './pages/login/login.component';
     SidebarComponent,
     NavbarComponent,
     AuthComponent,
-    LoginComponent
+    LoginComponent,
+    DayOffFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
