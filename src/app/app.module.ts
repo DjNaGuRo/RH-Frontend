@@ -33,7 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginComponent,
     NotFoundComponent,
     AuthComponent,
-    MainComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
