@@ -1,7 +1,13 @@
-import { Router } from '@angular/router';
-import { AuthService } from './../services/auth.service';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {NotifierService} from 'angular-notifier';
+import {HeaderType} from './../enum/header-type-enum';
+import {HttpResponse, HttpErrorResponse} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {AuthService} from './../services/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {User} from '../model/user';
+import {Subscription} from 'rxjs';
+import {NotificationType} from '../enum/notification-type.enum';
 
 @Component({
   selector: 'app-login',
@@ -11,16 +17,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   formLogin!: FormGroup;
   submitted = false;
+  private subscription: Subscription[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private notifierService: NotifierService
+  ) {
+  }
 
   ngOnInit(): void {
     this.formLogin = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.pattern('[a-z]+.[a-z]+')]],
+      email: ['', [Validators.required]],
       password: ['', Validators.required],
     });
   }
@@ -32,13 +41,34 @@ export class LoginComponent implements OnInit {
   onSubmit($event: any): void {
     $event.preventDefault();
     this.submitted = true;
-    console.log(this.authService.isLoggedIn());
 
     if (this.formLogin.invalid) {
       console.warn('Your order has been submitted', this.formLogin.value);
       return;
     }
-    this.authService.login(this.formLogin.value);
+    this.onLogin(this.formLogin.value);
     this.router.navigateByUrl('/');
+  }
+
+  // @ts-ignore
+  onLogin(user: User): User {
+    this.subscription.push(
+      this.authService.login(user).subscribe(
+        (response: HttpResponse<User>) => {
+          const token = response.headers.get(HeaderType.JWT_TOKEN);
+          // @ts-ignore
+          this.authService.saveToken(token);
+          this.authService.addUserToLocalCache(<User>response.body);
+          this.notifierService.notify(
+            NotificationType.SUCCESS,
+            'Vous etes connecte !'
+          );
+          this.router.navigateByUrl('/test');
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      )
+    );
   }
 }
