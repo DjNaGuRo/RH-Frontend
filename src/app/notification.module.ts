@@ -8,8 +8,8 @@ const notifierDefaultOptions: NotifierOptions = {
       distance: 12,
     },
     vertical: {
-      position: 'bottom',
-      distance: 12,
+      position: 'top',
+      distance: 90,
       gap: 10,
     },
   },

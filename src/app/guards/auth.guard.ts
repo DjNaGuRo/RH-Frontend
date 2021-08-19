@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot,} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, CanDeactivate, Router, RouterStateSnapshot,} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 import {NotificationService} from "../services/notification.service";
 import {NotificationType} from "../enum/notification-type.enum";
@@ -19,11 +19,18 @@ export class AuthGuard implements CanActivate {
   }
 
   private isUserLoggedIn(): boolean {
-    if (this.authService.isUserLoggedIn()) {
+    /*if (this.authService.isUserLoggedIn()) {
+      console.log(this.authService.isUserLoggedIn())
       return true;
     }
     this.router.navigateByUrl('/login');
     this.notificationService.notify(NotificationType.ERROR, "Vous n'etes pas identifie")
-    return false;
+    return false;*/
+    if(localStorage.getItem('user')){
+      return true;
+    }else{
+      this.router.navigate(['/login']);
+      return false;
+    }
   }
 }

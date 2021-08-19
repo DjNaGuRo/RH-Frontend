@@ -21,6 +21,7 @@ import {MainComponent} from './layouts/main/main.component';
 import {HttpClientModule} from '@angular/common/http';
 import {NotificationService} from "./services/notification.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AuthDesactivateGuard} from "./guards/auth-desactivate.guard";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NotificationModule,
     BrowserAnimationsModule
   ],
-  providers: [AuthGuard, AuthService, UserService,NotificationService],
+  providers: [AuthGuard,AuthDesactivateGuard ,AuthService, UserService,NotificationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {
