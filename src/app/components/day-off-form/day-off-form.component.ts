@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import { DaysOff } from '../../model/daysOff';
-import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStructAdapter } from '@ng-bootstrap/ng-bootstrap/datepicker/adapters/ngb-date-adapter';
 
 imports: [NgbModule]
 
@@ -14,34 +15,33 @@ imports: [NgbModule]
 
 export class DayOffFormComponent {
   closeResult = '';
-
+  minEndDate!:NgbDateStruct; 
   dayOffForm!: FormGroup;
 
-  
+  current = new Date();
+  minDate:NgbDateStruct = { year: this.current.getFullYear(), month: 
+    this.current.getMonth() + 1, day: this.current.getDate()+1 };
+
   constructor(private modalService: NgbModal,private fb: FormBuilder, private config: NgbDatepickerConfig) {
-    const current = new Date();
-    config.minDate = { year: current.getFullYear(), month: 
-    current.getMonth() + 1, day: current.getDate()+1 };
     
+    console.log(this.dayOffForm);
     config.outsideDays = 'hidden';
   }
   
-
+  
   ngOnInit(): void {
     this.dayOffForm = this.fb.group(
       {
         'dayOffType': ['', [Validators.required]], 
         'startDate': ['', [Validators.required]], 
         'endDate': ['', [Validators.required]] 
+      },{
+        updateOn: 'blur',
       });
+      this.dayOffForm.get('startDate')?.valueChanges.subscribe(startDate=>this.minEndDate=startDate);
+
   }
 
-  // validerStartDateEtEndDate(control: FormControl): ValidationErrors | null {
-  //   if (!control.value.startDate  || control.value.endDate != control.value.prenom) {
-  //     return null;
-  //   }
-  //   return {nomPrenomIdentique: true};
-  // }
 
   open(content: any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
