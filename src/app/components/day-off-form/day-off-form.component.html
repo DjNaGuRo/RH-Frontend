@@ -1,7 +1,7 @@
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Nouvelle demande d'absence</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" (click)="resetDayOffForm()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -17,7 +17,7 @@
           <option value="CSS">CSS</option>
           <option value="RTTE">RTTE</option>
           <option value="F">F</option>
-          <!-- et faire en sorte que l'accès à certains type de congé
+          <!-- rendre obligatoire toutes les champs du formulaire et faire en sorte que l'accès à certains type de congé
                      soit disponibles qu'en fonction de l'utilisateur connecté (administrateur ou manageur)  -->
         </select>
       </div>
@@ -25,8 +25,8 @@
       <div class="form-group">
         <label for="startDate">Date de début</label>
         <div class="input-group">
-          <input required id="startDate" class="form-control" placeholder="yyyy-mm-dd" formControlName="startDate" [readonly]="true"
-            ngbDatepicker #startDate="ngbDatepicker" [minDate]="minDate" ng-model="dt">
+          <input required id="startDate" class="form-control" placeholder="yyyy-mm-dd" formControlName="startDate"
+            [readonly]="true" ngbDatepicker #startDate="ngbDatepicker" [minDate]="minDate" ng-model="dt">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="startDate.toggle()" type="button">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -45,8 +45,8 @@
       <div class="form-group">
         <label for="endtDate">Date de fin</label>
         <div class="input-group">
-          <input required id="endDate" class="form-control" placeholder="yyyy-mm-dd" formControlName="endDate" [readonly]="true"
-            ngbDatepicker #endDate="ngbDatepicker" [minDate]="minEndDate">
+          <input required id="endDate" class="form-control" placeholder="yyyy-mm-dd" formControlName="endDate"
+            [readonly]="true" ngbDatepicker #endDate="ngbDatepicker" [minDate]="minEndDate">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="endDate.toggle()" type="button">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -71,7 +71,7 @@
   </div>
 </ng-template>
 
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Nouvelle demande d'absence</button>
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)" (blur)="resetDayOffForm()" >Nouvelle demande d'absence</button>
 
 <hr>
 
