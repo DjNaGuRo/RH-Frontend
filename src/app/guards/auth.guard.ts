@@ -1,15 +1,24 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, CanDeactivate, Router, RouterStateSnapshot,} from '@angular/router';
-import {AuthService} from '../services/auth.service';
-import {NotificationService} from "../services/notification.service";
-import {NotificationType} from "../enum/notification-type.enum";
+import { Injectable } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanDeactivate,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { NotificationService } from '../services/notification.service';
+import { NotificationType } from '../enum/notification-type.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router, private notificationService: NotificationService) {
-  }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private notificationService: NotificationService
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -26,9 +35,13 @@ export class AuthGuard implements CanActivate {
     this.router.navigateByUrl('/login');
     this.notificationService.notify(NotificationType.ERROR, "Vous n'etes pas identifie")
     return false;*/
-    if(localStorage.getItem('user')){
+    if (localStorage.getItem('user')) {
       return true;
-    }else{
+    } else {
+      this.notificationService.notify(
+        NotificationType.ERROR,
+        "Vous n'etes pas identifie"
+      );
       this.router.navigate(['/login']);
       return false;
     }

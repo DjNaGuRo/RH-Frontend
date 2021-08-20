@@ -3,7 +3,7 @@ import {HeaderType} from './../enum/header-type-enum';
 import {HttpResponse, HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {AuthService} from './../services/auth.service';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {User} from '../model/user';
 import {Subscription} from 'rxjs';
@@ -14,22 +14,21 @@ import {NotificationType} from '../enum/notification-type.enum';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit,OnDestroy {
   formLogin!: FormGroup;
   submitted = false;
-  private subscription: Subscription[] = [];
+  private subscription!: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
     private notifierService: NotifierService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.formLogin = this.formBuilder.group({
-      email: ['', [Validators.required]],
+      username: ['', [Validators.required]],
       password: ['', Validators.required],
     });
   }
@@ -52,10 +51,12 @@ export class LoginComponent implements OnInit {
 
   // @ts-ignore
   onLogin(user: User): User {
-    this.subscription.push(
+    this.subscription.add(
       this.authService.login(user).subscribe(
         (response: HttpResponse<User>) => {
-          const token = response.headers.get(HeaderType.JWT_TOKEN);
+          console.log(response);
+          const token = response.headers.get('Jwt-Token');
+          console.log(response.headers.get('Jwt-Token'));
           // @ts-ignore
           this.authService.saveToken(token);
           this.authService.addUserToLocalCache(<User>response.body);
@@ -66,9 +67,14 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/test');
         },
         (error: HttpErrorResponse) => {
-          console.log(error);
+          console.log(error.error.message);
         }
       )
     );
+  }
+
+  ngOnDestroy() {
+    // Unsubscribed the subscription
+    this.subscription.unsubscribe();
   }
 }

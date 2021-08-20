@@ -22,6 +22,9 @@ import {HttpClientModule} from '@angular/common/http';
 import {NotificationService} from "./services/notification.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {AuthDesactivateGuard} from "./guards/auth-desactivate.guard";
+import { HistoComponent } from './pages/histo/histo.component';
+import { ChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ import {AuthDesactivateGuard} from "./guards/auth-desactivate.guard";
     LoginComponent,
     NotFoundComponent,
     AuthComponent,
-    MainComponent
+    MainComponent,
+    HistoComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +47,8 @@ import {AuthDesactivateGuard} from "./guards/auth-desactivate.guard";
     ReactiveFormsModule,
     HttpClientModule,
     NotificationModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ChartsModule
   ],
   providers: [AuthGuard,AuthDesactivateGuard ,AuthService, UserService,NotificationService],
   bootstrap: [AppComponent],

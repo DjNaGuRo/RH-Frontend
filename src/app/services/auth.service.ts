@@ -29,8 +29,6 @@ export class AuthService {
    * @returns
    */
   public login(user: User): Observable<HttpResponse<User>> {
-    console.log(user);
-
     return this.http.post<User>(`${this.host}/auth/login`, user, {
       observe: 'response',
     });
@@ -38,14 +36,6 @@ export class AuthService {
 
   /**
    *
-   *headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Access-Control-Allow-Origin': 'http://localhost:4200',
-        'Access-Control-Allow-Methods': 'POST',
-        'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Allow-Headers':'Accept, Content-Type'
-      }),
    *
    *
    *
@@ -77,7 +67,6 @@ export class AuthService {
    */
   public saveToken(token: string) {
     this.token = token;
-    // @ts-ignore
     localStorage.setItem('token', token);
   }
   /**
