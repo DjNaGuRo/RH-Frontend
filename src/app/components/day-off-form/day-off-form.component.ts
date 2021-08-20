@@ -1,22 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { DaysOff } from '../../model/daysOff';
+import { Component } from '@angular/core';
 import { NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDateStructAdapter } from '@ng-bootstrap/ng-bootstrap/datepicker/adapters/ngb-date-adapter';
 
-imports: [NgbModule]
 
 @Component({
   selector: 'day-off-form',
-  templateUrl: './day-off-form.component.html'
+  templateUrl: './day-off-form.component.html',
+  styleUrls: ['./day-off-form.component.scss']
 })
 
 export class DayOffFormComponent {
   closeResult = '';
   minEndDate!: NgbDateStruct;
+  maxStartDate!: NgbDateStruct;
   dayOffForm!: FormGroup;
+  selectedValue ="CP";
 
   current = new Date();
   minDate: NgbDateStruct = {
@@ -25,8 +24,6 @@ export class DayOffFormComponent {
   };
 
   constructor(private modalService: NgbModal, private fb: FormBuilder, private config: NgbDatepickerConfig) {
-
-    console.log(this.dayOffForm);
     config.outsideDays = 'hidden';
   }
 
@@ -36,14 +33,41 @@ export class DayOffFormComponent {
       {
         'dayOffType': ['', [Validators.required]],
         'startDate': ['', [Validators.required]],
-        'endDate': ['', [Validators.required]]
+        'endDate': ['', [Validators.required]],
+        'reason': ['', [Validators.required, Validators.minLength(4)]],
       }, {
-      updateOn: 'blur',
+        updateOn: 'blur'
     });
     this.dayOffForm.get('startDate')?.valueChanges.subscribe(startDate => this.minEndDate = startDate);
-
+    this.dayOffForm.get('endDate')?.valueChanges.subscribe(endDate => this.maxStartDate = endDate);
   }
 
+  get DayOffTypeIsValid(){
+    return(
+      this.dayOffForm.get('dayOffType')?.valid
+    )
+  }
+  get DayOffTypeIsInvalid(){
+    return(
+      this.dayOffForm.get('dayOffType')?.invalid
+    )
+  }
+  get StartDateIsValid(){
+    return(
+      this.dayOffForm.get('startDate')?.valid
+    )
+  }
+  get StartDateIsInvalid(){
+    return(
+      this.dayOffForm.get('startDate')?.invalid
+    )
+  }
+  get reasonIsInvalid(){
+    return(
+      this.dayOffForm.get('reason')?.invalid &&
+      this.dayOffForm.get('reason')?.dirty
+      )
+  }
 
   open(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -65,12 +89,18 @@ export class DayOffFormComponent {
   resetDayOffForm() {
     this.dayOffForm.reset();
   }
-  // test appel fonction avec le bouton submit
-  verifForm() {
+
+  sendForm($event:any) {
+    $event.preventDefault();  
+    if(this.dayOffForm.invalid){
+      return;
+    }
     console.log("La vérification se lance : ");
+    console.log(this.dayOffForm.get('dayOffType')?.value);
     console.log(this.dayOffForm.get('startDate')?.value);
     console.log(this.dayOffForm.get('endDate')?.value);
-    console.log(this.dayOffForm.get('dayOffType')?.value);
+    console.log(this.dayOffForm.get('reason')?.value);
+    this.modalService.dismissAll();
     this.resetDayOffForm();
   }
 }
