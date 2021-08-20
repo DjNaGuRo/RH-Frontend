@@ -1,5 +1,7 @@
+import { Subscription } from 'rxjs';
+import { HistoService } from './../../services/histo.service';
 import { ChartType } from 'chart.js';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChartDataSets } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 
@@ -8,7 +10,14 @@ import { Color, Label } from 'ng2-charts';
   templateUrl: './histo.component.html',
   styleUrls: ['./histo.component.scss'],
 })
-export class HistoComponent {
+export class HistoComponent implements OnInit {
+  constructor(private histoService: HistoService) {}
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.histoService.getAllDayOff().subscribe();
+  }
   lineChartData: ChartDataSets[] = [
     { data: [85, 72, 78, 75, 77, 75], label: 'RTT' },
     { data: [25, 45, 46, 79, 95, 58], label: 'CP' },
