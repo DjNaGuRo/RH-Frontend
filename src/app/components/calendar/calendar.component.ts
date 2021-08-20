@@ -78,6 +78,7 @@ export class CalendarComponent implements OnInit {
     }
     console.log(this.collaboratorsCalendar);
 
+
     this.currentMonth = currentMonth
     daysOffMonthFormat
     this.daysOffMonth = daysOffMonthFormat

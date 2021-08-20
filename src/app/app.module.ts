@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,8 @@ import { AuthComponent } from './layouts/auth/auth.component';
 import { LoginComponent } from './pages/login/login.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -24,13 +26,19 @@ import { HttpClientModule } from '@angular/common/http';
     NavbarComponent,
     AuthComponent,
     LoginComponent,
+
     CalendarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    MatProgressBarModule,
+    BrowserAnimationsModule
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [],
   bootstrap: [AppComponent]
