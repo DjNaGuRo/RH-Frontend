@@ -1,8 +1,9 @@
+import { NotificationType } from './../../enum/notification-type.enum';
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {NotifierService} from "angular-notifier";
-import {AuthService} from "../../services/auth.service";
+import { NotifierService } from 'angular-notifier';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -20,5 +21,7 @@ export class HeaderComponent implements OnInit {
 
   logOut() {
     this.authService.logOut();
+    this.notifier.notify(NotificationType.SUCCESS, 'Vous maitenant deconnecte');
+    this.router.navigateByUrl('/login');
   }
 }

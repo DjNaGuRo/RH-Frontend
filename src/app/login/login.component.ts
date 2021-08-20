@@ -1,23 +1,22 @@
-import {NotifierService} from 'angular-notifier';
-import {HeaderType} from '../enum/header-type.enum';
-import {HttpResponse, HttpErrorResponse} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {AuthService} from './../services/auth.service';
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {User} from '../model/user';
-import {Subscription} from 'rxjs';
-import {NotificationType} from '../enum/notification-type.enum';
+import { NotifierService } from 'angular-notifier';
+import { HeaderType } from '../enum/header-type.enum';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { AuthService } from './../services/auth.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User } from '../model/user';
+import { Subscription } from 'rxjs';
+import { NotificationType } from '../enum/notification-type.enum';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit,OnDestroy {
+export class LoginComponent implements OnInit {
   formLogin!: FormGroup;
   submitted = false;
-  private subscription!: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,7 +27,7 @@ export class LoginComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.formLogin = this.formBuilder.group({
-      username: ['', [Validators.required]],
+      email: ['', [Validators.required]],
       password: ['', Validators.required],
     });
   }
@@ -46,35 +45,28 @@ export class LoginComponent implements OnInit,OnDestroy {
       return;
     }
     this.onLogin(this.formLogin.value);
-    this.router.navigateByUrl('/');
+    //this.router.navigateByUrl('/');
   }
 
   // @ts-ignore
   onLogin(user: User): User {
-    this.subscription.add(
-      this.authService.login(user).subscribe(
-        (response: HttpResponse<User>) => {
-          console.log(response);
-          const token = response.headers.get('Jwt-Token');
-          console.log(response.headers.get('Jwt-Token'));
-          // @ts-ignore
-          this.authService.saveToken(token);
-          this.authService.addUserToLocalCache(<User>response.body);
-          this.notifierService.notify(
-            NotificationType.SUCCESS,
-            'Vous etes connecte !'
-          );
-          this.router.navigateByUrl('/test');
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.error.message);
-        }
-      )
+    this.authService.login(user).subscribe(
+      (response: HttpResponse<User>) => {
+        console.log(response);
+        const token = response.headers.get('Jwt-Token');
+        console.log(response.headers.get('Jwt-Token'));
+        // @ts-ignore
+        this.authService.saveToken(token);
+        this.authService.addUserToLocalCache(<User>response.body);
+        this.notifierService.notify(
+          NotificationType.SUCCESS,
+          'Vous etes connecte !'
+        );
+        this.router.navigateByUrl('/');
+      },
+      (error: HttpErrorResponse) => {
+        this.notifierService.notify(NotificationType.ERROR, error.error.text);
+      }
     );
-  }
-
-  ngOnDestroy() {
-    // Unsubscribed the subscription
-    this.subscription.unsubscribe();
   }
 }

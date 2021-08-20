@@ -1,29 +1,29 @@
-#colonne{
+#colonne {
   display: flex;
   flex-direction: row;
 }
 
-#basPage{
-  position: fixed;
+#basPage {
+  position: static;
   width: 100%;
   bottom: 0px;
 }
 
-.fond{
+.fond {
   background-color: #343a40;
   color: #ffffff;
 }
 
-#background{
-  background-color: #80D0F0;
+#background {
+  background-color: #80d0f0;
   padding: 0px !important;
 }
 
-#carte{
+#carte {
   width: 200px;
   height: 200px;
 }
 
-#image{
+#image {
   height: 60px;
 }
