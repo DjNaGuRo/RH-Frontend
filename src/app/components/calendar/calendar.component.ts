@@ -3,32 +3,42 @@ import * as moment from 'moment'
 import { Collaborator } from 'src/app/model/collaborator'
 import { DayOff } from 'src/app/model/dayOff'
 import { UserService } from 'src/app/services/user.service'
+
+// Création d'une interface qui va permettre d'afficher le tableau des jours de congé de chaque employé
 interface CollaboratorCalendar extends Collaborator {
-    daysOffMonth:(DayOff | null)[]
+  daysOffMonth: (DayOff | null)[]
 }
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
+  // Mois actuellement visionner qui va permettre de lancer les fonctions permettant de changer le mois affiché
   currentMonth!: number
+  // Mois actuellement visionner affiché dans l'entête du calendrier
   currentMonthLetter!: string
+  // Année actuellement visionner affiché dans l'entête du calendrier
   currentYear = moment().year()
+  // Liste de tout les jours du mois actuellement visionner
   daysOffMonth?: string[]
+  // Liste des collaborators du département d'un Manager
   collaborators?: Collaborator[]
-  daysOffToInclude = new Map<number, DayOff>()
-  collaboratorsCalendar:CollaboratorCalendar[] = []
+  // Initialisation du calendrier permettant l'affichage des jours de congés de chaques employés
+  collaboratorsCalendar: CollaboratorCalendar[] = []
+
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    // Récupération des collaborators du département d'un Manager et lancement de la fonction permettant d'initialiser le calendrier
     this.userService.getCollaborator().subscribe(collaborators => {
       this.collaborators = collaborators
       this.getDaysArrayByMonth(moment().month())
     })
 
   }
-
+  // Fonction permettant d'afficher les jours d'un mois donné et traitement de l'affichage des jours de congés de chaque collaborator
   getDaysArrayByMonth(monthChoice: number) {
     this.collaboratorsCalendar = []
     if (monthChoice < 0) {
@@ -52,12 +62,15 @@ export class CalendarComponent implements OnInit {
     let currentMonth: number
     currentMonth = parseInt(arrDays[0].format("MM"))
     this.currentMonthLetter = arrDays[0].locale("fr").format("MMMM")
+
     if (this.collaborators) {
+      // Nous rajoutons à l'interface CollaboratorCalendar chaque collaborator du departement avec un tableau vide de jour de congés
       for (const collaborator of this.collaborators) {
-        const collabCalendar:CollaboratorCalendar = {
+        const collabCalendar: CollaboratorCalendar = {
           ...collaborator,
-          daysOffMonth : []
+          daysOffMonth: []
         }
+        // Pour chaque jours du mois si il correspond a un jour de congé d'un collaborator alors nous le rajoutons à sa liste, sinon nous rajoutons une entrée null
         for (const day of arrDays) {
           let dayOffFind = false
           for (const dayOff of collaborator.daysOffs) {
@@ -72,33 +85,16 @@ export class CalendarComponent implements OnInit {
         }
         this.collaboratorsCalendar.push(collabCalendar)
       }
+      // Formatage de chaque jours du mois pour l'affichage des jours dans le calendrier
       for (const day of arrDays) {
         daysOffMonthFormat.push(day.locale("fr").format("dd \n DD/MM"))
       }
     }
-    console.log(this.collaboratorsCalendar);
-
 
     this.currentMonth = currentMonth
     daysOffMonthFormat
     this.daysOffMonth = daysOffMonthFormat
 
   }
-  testCollaborator() {
-    console.log(this.collaborators)
-  }
-  compareDate(date: string): DayOff | null {
-    if (this.collaborators) {
-      for (const collaborator of this.collaborators) {
-        for (const dayOff of collaborator.daysOffs) {
-          if (dayOff.startDate.includes(date)) {
-            return dayOff;
-          }
-        }
-      }
-    }
-    return null
-  }
-  // console.log(dayOff)
-  // console.log(date)
+
 }
