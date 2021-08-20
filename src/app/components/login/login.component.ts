@@ -1,13 +1,13 @@
 import {NotifierService} from 'angular-notifier';
-import {HeaderType} from './../enum/header-type-enum';
+import {HeaderType} from '../../enum/header-type-enum';
 import {HttpResponse, HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {AuthService} from './../services/auth.service';
+import {AuthService} from '../../services/auth.service';
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {User} from '../model/user';
+import {User} from '../../model/user';
 import {Subscription} from 'rxjs';
-import {NotificationType} from '../enum/notification-type.enum';
+import {NotificationType} from '../../enum/notification-type.enum';
 
 @Component({
   selector: 'app-login',
