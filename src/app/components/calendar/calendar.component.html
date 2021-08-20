@@ -1,26 +1,29 @@
-<div class="btn-group btn-group-toggle">
-  <label class="btn-primary" ngbButtonLabel>
-    <input type="checkbox" (click)="getDaysArrayByMonth(currentMonth-2)"> Précédent
-  </label>
-  <label class="btn-primary" ngbButtonLabel>
-    <input type="checkbox" (click)="getDaysArrayByMonth(currentMonth)"> Suivant
-  </label>
-</div>
 <hr>
-<div class="table-responsive">
-  <h1>{{currentYear}}</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Nom employé</th>
-          <th *ngFor="let dayOffMonth of daysOffMonth" scope="col">{{dayOffMonth}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td *ngFor="let dayOffMonth of daysOffMonth">Cell</td>
-        </tr>
-      </tbody>
-    </table>
+<div class="table-responsive col-12">
+  <h1> {{currentMonthLetter}} - {{currentYear}}</h1>
+  <div class="btn-group btn-group-toggle">
+    <label class="btn-primary" ngbButtonLabel>
+      <input type="checkbox" (click)="getDaysArrayByMonth(currentMonth-2)"> Précédent
+    </label>
+    <label class="btn-primary" ngbButtonLabel>
+      <input type="checkbox" (click)="getDaysArrayByMonth(currentMonth)"> Suivant
+    </label>
   </div>
+  <table class="table table-bordered border-dark ">
+    <thead class="table-primary">
+      <tr>
+        <th scope="col">Nom employé</th>
+        <th *ngFor="let dayOffMonth of daysOffMonth" scope="col">{{dayOffMonth}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let collaborator of collaborators">
+        <th scope="row">{{collaborator.firstName}}<br>{{collaborator.lastName}}</th>
+        <td *ngFor="let dayOffMonth of daysOffMonth">
+          <div *ngIf="compareDate(dayOffMonth)">réussit</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<input type="button" (click)="testCollaborator()" value="test">
