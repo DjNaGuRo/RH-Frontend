@@ -17,10 +17,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let collaborator of collaborators">
-        <th scope="row">{{collaborator.firstName}}<br>{{collaborator.lastName}}</th>
-        <td *ngFor="let dayOffMonth of daysOffMonth">
-          <div *ngIf="compareDate(dayOffMonth)">réussit</div>
+      <tr *ngFor="let collaboratorCalendar of collaboratorsCalendar">
+        <th scope="row">{{collaboratorCalendar.firstName}}<br>{{collaboratorCalendar.lastName}}</th>
+        <td *ngFor="let dayOff of collaboratorCalendar.daysOffMonth">
+          <div *ngIf="dayOff">
+            <button type="button" class="{{dayOff.type}} btn btn-secondary" data-toggle="tooltip" data-placement="top" title="{{dayOff.reason}}">
+            {{dayOff.type}}
+          </button>
+        </div>
         </td>
       </tr>
     </tbody>
