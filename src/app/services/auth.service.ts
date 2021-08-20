@@ -51,9 +51,9 @@ export class AuthService {
     localStorage.setItem('user', JSON.stringify(user));
   }
   /**
- *
- * @returns
- */
+   *
+   * @returns
+   */
   // @ts-ignore
   public getUserFromLocalCache(): User {
     if (localStorage.getItem('user')) {
@@ -78,7 +78,7 @@ export class AuthService {
   // @ts-ignore
   public isUserLoggedIn(): boolean {
     this.loadToken();
-    console.log(this.token)
+    console.log(this.token);
     if (this.token != null && this.token !== '') {
       if (this.jwtHelper.decodeToken(this.token).sub != null || '') {
         if (!this.jwtHelper.isTokenExpired(this.token)) {

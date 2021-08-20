@@ -1,5 +1,5 @@
 import {NotifierService} from 'angular-notifier';
-import {HeaderType} from './../enum/header-type-enum';
+import {HeaderType} from '../enum/header-type.enum';
 import {HttpResponse, HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {AuthService} from './../services/auth.service';

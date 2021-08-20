@@ -26,6 +26,7 @@ import { HistoComponent } from './pages/histo/histo.component';
 import { ChartsModule } from 'ng2-charts';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
