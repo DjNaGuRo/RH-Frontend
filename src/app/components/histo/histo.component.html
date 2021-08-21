@@ -1,9 +1,14 @@
-<div class="container">
-  <h1 class="text-center">Histogramme</h1>
-  <div class="chart-wrapper">
-    <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-      [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
-    </canvas>
+<div class="container mt-5">
+  <div class="prev-next">
+    <a href="#" (click)="getDaysArrayByYear(currentYear+2)" class="previous round">&#8249;</a>
+    <a href="#" (click)="getDaysArrayByYear(currentYear)" class="next round">&#8250;</a>
   </div>
+  <h1 class="text-center">Histogramme</h1>
+  <div class="year">{{currentYear-1}}</div>
 
+</div>
+<div class="chart-wrapper">
+  <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+    [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
+  </canvas>
 </div>

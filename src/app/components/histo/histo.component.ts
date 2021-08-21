@@ -4,6 +4,7 @@ import { ChartType } from 'chart.js';
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-histo',
@@ -11,12 +12,27 @@ import { Color, Label } from 'ng2-charts';
   styleUrls: ['./histo.component.scss'],
 })
 export class HistoComponent implements OnInit {
+  currentMonth!: number;
+  currentMonthLetter!: string;
+  currentYear = moment().year();
+  daysOffYear?: string[];
+  collaborators = [];
+
   constructor(private histoService: HistoService) {}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.histoService.getAllDayOff().subscribe();
+    this.histoService.getAllDayOff().subscribe((v) => console.log(v));
+    this.getDaysArrayByYear(moment().year());
+    this.histoService
+      .getAllDayOff()
+      .subscribe((collaborators) => (this.collaborators = collaborators));
+  }
+  getDaysArrayByYear(yearChoice: number) {
+    return this.currentYear < yearChoice
+      ? (this.currentYear -= 1)
+      : (this.currentYear += 1);
   }
   lineChartData: ChartDataSets[] = [
     { data: [85, 72, 78, 75, 77, 75], label: 'RTT' },

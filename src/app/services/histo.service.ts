@@ -11,6 +11,6 @@ export class HistoService {
   constructor(private http: HttpClient) {}
 
   public getAllDayOff(): Observable<any> {
-    return this.http.get<any>(this.host.apiUrl + '/callendar');
+    return this.http.get<any>(this.host.apiUrl + '/calendar');
   }
 }
