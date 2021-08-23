@@ -1,0 +1,31 @@
+#colonne {
+  display: flex;
+  flex-direction: row;
+  padding-top: 30px;
+}
+
+#basPage {
+  position: static;
+  width: 100%;
+  bottom: 0px
+
+}
+
+.fond {
+  background-color: #343a40;
+  color: #ffffff;
+}
+
+#background {
+  background-color: #80d0f0;
+  padding: 0px !important;
+}
+
+#carte {
+  width: 200px;
+  height: 200px;
+}
+
+#image {
+  height: 60px;
+}
