@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -72,7 +72,6 @@ export class DayOffFormComponent {
   open(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
   }
-
 
   resetDayOffForm() {
     this.dayOffForm.reset();
