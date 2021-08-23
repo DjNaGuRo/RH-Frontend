@@ -11,7 +11,10 @@ export class UserService {
   constructor(private http:HttpClient) {
   }
 
-  getCollaborator() {
+  getCollaborators() {
     return this.http.get<Collaborator[]>(environment.urlResourceCalendar)
+  }
+  getCollaborator() {
+    return this.http.get<Collaborator>(environment.urlResourceCollaborator)
   }
 }
