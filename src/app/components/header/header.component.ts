@@ -9,20 +9,24 @@ import { NotificationService } from '../../services/notification.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  user!: User;
   constructor(
     public router: Router,
     public notifier: NotificationService,
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getUser();
+  }
 
   logOut() {
     this.authService.logOut();
   }
 
-  getUsername():User{
-    return this.authService.getUserFromLocalCache();
+  getUser(): User {
+    this.user = this.authService.getUserFromLocalCache();
+    return this.user;
   }
   isLoggedIn(): boolean {
     if (localStorage.getItem('user')) {
