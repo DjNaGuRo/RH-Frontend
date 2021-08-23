@@ -1,22 +1,35 @@
-.entete{
-  height: 80px;
-  #img{
-    height: 70px;
-  }
+header {
+  margin: 0;
+  padding: 0;
 }
 
-#titre{
+#img {
+  height: 70px;
+  margin-left: 50px;
+  margin-right: 50px;
+
+}
+
+
+#titre {
   color: #ffffff;
+  font-size: 30px;
 
 }
 
-#logo{
+#logo {
   background-color: #80D0F0;
   height: 80px;
 }
 
 
-#lien{
+#link {
   cursor: pointer;
+  color: #ffffff;
 }
 
+@media screen and (max-width: 600px) {
+  #titre {
+    display: none;
+  }
+}

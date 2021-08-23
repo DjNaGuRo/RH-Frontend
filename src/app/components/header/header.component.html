@@ -1,15 +1,21 @@
-  <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow entete" >
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" id="logo" href="#">
-      <img id="img" src="assets/img/logo.png" alt="Logo de l'entreprise"/>
-    </a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
-      data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+<header class="navbar navbar-dark bg-dark navbar-fixed-top navbar-expand-lg">
+
+    <a id="logo" class="navbar-brand mr-5" [routerLink]="['/']"><img id="img" src="assets/img/logo.png" alt="Logo de l'entreprise"/></a>
+
+    <button class="navbar-toggler navbar-toggler-right" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed"
+             aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <h4 id="titre">RH management </h4>
-    <div class="navbar-nav">
-      <div class="nav-item text-nowrap">
-        <a class="nav-link px-3" id="lien"  (click)="logOut()">Déconnexion</a>
-      </div>
+
+    <div class="navbar-collapse collapse" [ngbCollapse]="isNavbarCollapsed" id="navbarContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <h1 id="titre" class="mr-auto" > RH management </h1>
+        </li>
+      </ul>
+
+      <span class="d-lg-inline">
+       <a class="nav-link px-3" id="link"  (click)="logOut()">Déconnexion</a>
+     </span>
     </div>
   </header>

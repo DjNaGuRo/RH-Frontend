@@ -1,12 +1,17 @@
+body{
+  overflow: hidden;
+}
+
 #colonne{
   display: flex;
   flex-direction: row;
 }
 
 #basPage{
-  position: fixed;
+  position: static;
   width: 100%;
   bottom: 0px;
+  padding-top: 10px;
 }
 
 .fond{
