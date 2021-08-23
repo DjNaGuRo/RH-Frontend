@@ -6,7 +6,7 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NotificationService } from './services/notification.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './components/login/login.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,17 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     NotificationModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [AuthGuard, AuthService, UserService, NotificationService],
+  providers: [
+    AuthGuard,
+    AuthService,
+    UserService,
+    NotificationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
