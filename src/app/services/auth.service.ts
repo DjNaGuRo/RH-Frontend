@@ -1,7 +1,5 @@
-import {
-  HttpClient,
-  HttpResponse,
-} from '@angular/common/http';
+import { Router } from '@angular/router';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
@@ -20,7 +18,7 @@ export class AuthService {
    *
    * @param http
    */
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
   /**
    *
    * @param user
@@ -59,9 +57,9 @@ export class AuthService {
     localStorage.setItem('user', JSON.stringify(user));
   }
   /**
- *
- * @returns
- */
+   *
+   * @returns
+   */
   // @ts-ignore
   public getUserFromLocalCache(): User {
     if (localStorage.getItem('user')) {
@@ -87,7 +85,7 @@ export class AuthService {
   // @ts-ignore
   public isUserLoggedIn(): boolean {
     this.loadToken();
-    console.log(this.token)
+    console.log(this.token);
     if (this.token != null && this.token !== '') {
       if (this.jwtHelper.decodeToken(this.token).sub != null || '') {
         if (!this.jwtHelper.isTokenExpired(this.token)) {
@@ -106,5 +104,6 @@ export class AuthService {
     this.loggedInUsername = null;
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    this.router.navigate(['/']);
   }
 }

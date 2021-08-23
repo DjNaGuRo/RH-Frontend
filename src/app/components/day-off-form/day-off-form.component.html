@@ -1,0 +1,148 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Nouvelle demande d'absence</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')"
+      (click)="resetDayOffForm()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="dayOffForm">
+      <label for="dayOffType">Type de congé</label><br>
+      <select class="form-select" formControlName="dayOffType" aria-label="Default select example"
+        [(ngModel)]="selectedValue">
+        <option value="CP">CP</option>
+        <option value="RTTS">RTTS</option>
+        <option value="CSS">CSS</option>
+        <option value="RTTE">RTTE</option>
+        <option value="F">F</option>
+        <!-- rendre obligatoire toutes les champs du formulaire et faire en sorte que l'accès à certains type de congé
+                     soit disponibles qu'en fonction de l'utilisateur connecté (administrator/manager/employe)  -->
+      </select>
+      <!-- <p *ngIf="isDayOffTypeInvalide" class="error-message">
+        Vous devez choisir un type de congé
+      </p> -->
+
+      <div class="form-group">
+        <label for="startDate">Date de début</label>
+        <div class="input-group">
+          <input required id="startDate" class="form-control" placeholder="yyyy-mm-dd" formControlName="startDate"
+            [readonly]="true" ngbDatepicker #startDate="ngbDatepicker" [minDate]="minDate" [maxDate]="maxStartDate">
+
+          <div *ngIf="DayOffTypeIsValid">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="startDate.toggle()" type="button"
+                [disabled]="DayOffTypeIsInvalid">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-calendar-week" viewBox="0 0 16 16">
+                  <path
+                    d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z">
+                  </path>
+                  <path
+                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z">
+                  </path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="DayOffTypeIsInvalid">
+            <div class="input-group-append" placement="left"
+              ngbTooltip="Vous devez d'abord selectionner un type de congé">
+              <button class="btn btn-outline-secondary calendar" (click)="startDate.toggle()" type="button"
+                [disabled]="DayOffTypeIsInvalid">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-calendar-week" viewBox="0 0 16 16">
+                  <path
+                    d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z">
+                  </path>
+                  <path
+                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z">
+                  </path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="endtDate">Date de fin</label>
+        <div class="input-group">
+          <input required id="endDate" class="form-control" placeholder="yyyy-mm-dd" formControlName="endDate"
+            [readonly]="true" ngbDatepicker #endDate="ngbDatepicker" [minDate]="minEndDate">
+
+          <div *ngIf="StartDateIsInvalid" placement="left"
+          ngbTooltip="Vous devez d'abord selectionner un jour de début">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="endDate.toggle()" type="button"
+                [disabled]="StartDateIsInvalid">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-calendar-week" viewBox="0 0 16 16">
+                  <path
+                    d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z">
+                  </path>
+                  <path
+                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z">
+                  </path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          
+          <div *ngIf="StartDateIsValid">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="endDate.toggle()" type="button"
+                [disabled]="StartDateIsInvalid" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-calendar-week" viewBox="0 0 16 16">
+                  <path
+                    d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z">
+                  </path>
+                  <path
+                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z">
+                  </path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- <p *ngIf="isEndDateAvailable" class="error-message">
+    Vous devez choisir une date de début
+  </p> -->
+      <div class="form-floating">
+        <label for="reason">Motif :</label>
+        <textarea class="form-control" placeholder="Motif de votre absence (facultatif)" id="floatingTextarea"
+          formControlName="reason"></textarea>
+      </div>
+      <p *ngIf="reasonIsInvalid" class="error-message">
+        Vous devez renseigner un motif de minimum 4 caractères
+      </p>
+
+    </form>
+  </div>
+
+<div *ngIf="dayOffForm.invalid" placement="down"
+ngbTooltip="Toutes les données doivent être valide pour soumettre votre demande">
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-success" [disabled]="dayOffForm.invalid"
+      (click)="sendForm($event)">Soumettre la demande</button>
+  </div>
+</div>
+
+<div *ngIf="dayOffForm.valid">
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-success" [disabled]="dayOffForm.invalid"
+      (click)="sendForm($event)">Soumettre la demande</button>
+  </div>
+</div>
+
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)" (blur)="resetDayOffForm()">Nouvelle demande
+  d'absence</button>
