@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { HistoService } from './../../services/histo.service';
 import { ChartType } from 'chart.js';
@@ -5,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartDataSets } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import * as moment from 'moment';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-histo',
@@ -12,25 +14,31 @@ import * as moment from 'moment';
   styleUrls: ['./histo.component.scss'],
 })
 export class HistoComponent implements OnInit {
-  currentMonth!: number;
-  currentMonthLetter!: string;
   currentYear = moment().year();
   daysOffYear?: string[];
-  collaborators:any =[];
+  collaborators: any = [];
+  subscriptions: Subscription[] = [];
+  user?: User;
 
-  constructor(private histoService: HistoService) {}
+  constructor(
+    private histoService: HistoService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
+    this.user = this.authService.getUserFromLocalCache();
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.histoService.getAllDayOff().subscribe((v) => console.log(v));
+    this.histoService.getAllDayOffByIdUser(this.user.id).subscribe((collab) => {
+      console.log(collab);
+      this.collaborators = collab;
+    });
     this.getGraphByYear(moment().year());
-    this.histoService
-      .getAllDayOff()
-      .subscribe((collaborators) => (this.collaborators = collaborators));
   }
   getGraphByYear(yearChoice: number) {
-    return this.currentYear < yearChoice
+    console.log(this.user);
+
+    this.currentYear < yearChoice
       ? (this.currentYear -= 1)
       : (this.currentYear += 1);
   }
