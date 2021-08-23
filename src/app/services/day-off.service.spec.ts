@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UserService } from './user.service';
+import { DayOffService } from './day-off.service';
 
-describe('UserService', () => {
-  let service: UserService;
+describe('DayOffService', () => {
+  let service: DayOffService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(UserService);
+    service = TestBed.inject(DayOffService);
   });
 
   it('should be created', () => {

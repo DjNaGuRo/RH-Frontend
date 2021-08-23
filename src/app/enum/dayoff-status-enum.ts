@@ -1,0 +1,3 @@
+export enum DayOffStatusEnum {
+  INITIAL,WAITING_FOR_VALIDATION,VALIDATED,REJECTED
+}
