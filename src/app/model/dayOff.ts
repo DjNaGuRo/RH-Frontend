@@ -11,3 +11,10 @@ export interface DayOff {
   status:DayOffStatusEnum,
   collaborators:Collaborator[]
 }
+
+export interface DayOffToCreate {
+  type: DayOffTypeEnum;
+  startDate: string;
+  endDate: string;
+  reason: string;
+}

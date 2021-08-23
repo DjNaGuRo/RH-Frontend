@@ -19,6 +19,7 @@ import { LoginComponent } from './components/login/login.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { DayOffFormComponent } from './components/day-off-form/day-off-form.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
     HomeComponent,
     LoginComponent,
     CalendarComponent,
+    DayOffFormComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,17 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { DayOff, DayOffToCreate } from '../model/dayOff';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DayOffService {
 
-  constructor() { }
+  constructor(private http:HttpClient) {
+  }
+
+  createDayOff(dayOffToCreate : DayOffToCreate) {
+    return this.http.post<DayOff>(environment.urlResourceAddDayOff, dayOffToCreate) 
+  }
 }
