@@ -104,6 +104,6 @@ export class AuthService {
     this.loggedInUsername = null;
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    this.router.navigate(['/']);
+    this.router.navigate(['/login']);
   }
 }
