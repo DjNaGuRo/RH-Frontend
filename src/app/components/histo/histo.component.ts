@@ -16,7 +16,7 @@ export class HistoComponent implements OnInit {
   currentMonthLetter!: string;
   currentYear = moment().year();
   daysOffYear?: string[];
-  collaborators = [];
+  collaborators:any =[];
 
   constructor(private histoService: HistoService) {}
 
@@ -24,12 +24,12 @@ export class HistoComponent implements OnInit {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.histoService.getAllDayOff().subscribe((v) => console.log(v));
-    this.getDaysArrayByYear(moment().year());
+    this.getGraphByYear(moment().year());
     this.histoService
       .getAllDayOff()
       .subscribe((collaborators) => (this.collaborators = collaborators));
   }
-  getDaysArrayByYear(yearChoice: number) {
+  getGraphByYear(yearChoice: number) {
     return this.currentYear < yearChoice
       ? (this.currentYear -= 1)
       : (this.currentYear += 1);

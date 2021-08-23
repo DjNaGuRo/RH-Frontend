@@ -10,7 +10,7 @@ export class HistoService {
   private host = environment;
   constructor(private http: HttpClient) {}
 
-  public getAllDayOff(): Observable<any> {
+  public getAllDayOff(): Observable<any[]> {
     return this.http.get<any>(this.host.apiUrl + '/calendar');
   }
 }
