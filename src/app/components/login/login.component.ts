@@ -1,3 +1,4 @@
+import { Collaborator } from 'src/app/model/collaborator';
 import { NotifierService } from 'angular-notifier';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -53,16 +54,16 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   // @ts-ignore
-  onLogin(user: User): void {
+  onLogin(user: Collaborator): void {
     this.subscriptions.push(
       this.authService.login(user).subscribe(
-        (response: HttpResponse<User>) => {
+        (response: HttpResponse<Collaborator>) => {
           console.log(response);
           const token = response.headers.get('Jwt-Token');
           console.log(response.headers.get('Jwt-Token'));
           // @ts-ignore
           this.authService.saveToken(token);
-          this.authService.addUserToLocalCache(<User>response.body);
+          this.authService.addUserToLocalCache(<Collaborator>response.body);
           this.notifierService.notify(
             NotificationType.SUCCESS,
             'Vous etes connecte !'
