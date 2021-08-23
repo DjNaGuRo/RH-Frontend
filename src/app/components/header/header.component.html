@@ -9,7 +9,7 @@
   <h4 id="titre">RH management </h4>
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" id="lien" (click)="logOut()">Déconnexion</a>
+      <a class="nav-link px-3" id="lien" (click)="logOut()" *ngIf="isLoggedIn()">Déconnexion</a>
     </div>
   </div>
 </header>

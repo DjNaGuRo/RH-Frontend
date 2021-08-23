@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/model/user';
 import { AuthService } from '../../services/auth.service';
 import { NotificationService } from '../../services/notification.service';
 @Component({
@@ -18,5 +19,15 @@ export class HeaderComponent implements OnInit {
 
   logOut() {
     this.authService.logOut();
+  }
+
+  getUsername():User{
+    return this.authService.getUserFromLocalCache();
+  }
+  isLoggedIn(): boolean {
+    if (localStorage.getItem('user')) {
+      return true;
+    }
+    return false;
   }
 }
