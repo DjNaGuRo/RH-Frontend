@@ -12,12 +12,10 @@ import {FooterComponent} from './components/footer/footer.component';
 import {HomeComponent} from './components/home/home.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {LoginComponent} from './components/login/login.component';
-import {NotFoundComponent} from './components/not-found/not-found.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {NotificationService} from "./services/notification.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {AuthDesactivateGuard} from "./guards/auth-desactivate.guard";
 
 @NgModule({
   declarations: [
@@ -26,7 +24,6 @@ import {AuthDesactivateGuard} from "./guards/auth-desactivate.guard";
     FooterComponent,
     HomeComponent,
     LoginComponent,
-    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +34,7 @@ import {AuthDesactivateGuard} from "./guards/auth-desactivate.guard";
     NotificationModule,
     BrowserAnimationsModule
   ],
-  providers: [AuthGuard,AuthDesactivateGuard ,AuthService, UserService,NotificationService],
+  providers: [AuthGuard,AuthService, UserService,NotificationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {

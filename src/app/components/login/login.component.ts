@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.onLogin(this.formLogin.value);
-    this.router.navigateByUrl('/');
   }
 
   onLogin(user: User): void {
