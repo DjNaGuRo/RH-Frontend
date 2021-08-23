@@ -1,13 +1,13 @@
-import {NotifierService} from 'angular-notifier';
-import {HeaderType} from '../../enum/header-type-enum';
-import {HttpResponse, HttpErrorResponse} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {User} from '../../model/user';
-import {Subscription} from 'rxjs';
-import {NotificationType} from '../../enum/notification-type.enum';
+import { NotifierService } from 'angular-notifier';
+import { HeaderType } from '../../enum/header-type-enum';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User } from '../../model/user';
+import { Subscription } from 'rxjs';
+import { NotificationType } from '../../enum/notification-type.enum';
 
 @Component({
   selector: 'app-login',
@@ -24,10 +24,12 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private notifierService: NotifierService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
+    if (localStorage.getItem('user')) {
+      this.router.navigateByUrl('/');
+    }
     this.formLogin = this.formBuilder.group({
       email: ['', [Validators.required]],
       password: ['', Validators.required],
@@ -50,8 +52,7 @@ export class LoginComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  // @ts-ignore
-  onLogin(user: User): User {
+  onLogin(user: User): void {
     this.subscription.push(
       this.authService.login(user).subscribe(
         (response: HttpResponse<User>) => {
