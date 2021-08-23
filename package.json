@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --base-href=/rhproject-front/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -25,6 +25,7 @@
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "angular-notifier": "^9.1.0",
     "bootstrap": "^4.5.0",
+    "moment": "^2.29.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

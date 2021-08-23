@@ -9,7 +9,8 @@
   border-radius: 2px;
   cursor: pointer;
   opacity: 1;
-  -webkit-transition: background-color .2s ease;
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
   transition: background-color .2s ease;
 }
 
@@ -34,3 +35,26 @@
 .button--secondary:active {
   background-color: #CACACA;
 }
+
+.entete{
+  height: 80px;
+  #img{
+    height: 70px;
+  }
+}
+
+#titre{
+  color: #ffffff;
+
+}
+
+#logo{
+  background-color: #80D0F0;
+  height: 80px;
+}
+
+
+#lien{
+  cursor: pointer;
+}
+
