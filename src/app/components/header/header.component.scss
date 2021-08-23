@@ -9,52 +9,47 @@
   border-radius: 2px;
   cursor: pointer;
   opacity: 1;
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
-  transition: background-color .2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .button--primary {
-  background-color: #2B90D9;
-  color: #FFF;
+  background-color: #2b90d9;
+  color: #fff;
 }
 
 .button--primary:hover,
 .button--primary:focus,
 .button--primary:active {
-  background-color: #2273AD;
+  background-color: #2273ad;
 }
 
 .button--secondary {
-  background-color: #DDD;
+  background-color: #ddd;
   color: #333;
 }
 
 .button--secondary:hover,
 .button--secondary:focus,
 .button--secondary:active {
-  background-color: #CACACA;
+  background-color: #cacaca;
 }
 
-.entete{
+.entete {
   height: 80px;
-  #img{
+  #img {
     height: 70px;
   }
 }
 
-#titre{
+#titre {
   color: #ffffff;
-
 }
 
-#logo{
-  background-color: #80D0F0;
+#logo {
+  background-color: #80d0f0;
   height: 80px;
 }
 
-
-#lien{
+#lien {
   cursor: pointer;
 }
-
