@@ -7,6 +7,10 @@ import {Component, OnInit} from '@angular/core';
 import {Color, Label} from 'ng2-charts';
 import * as moment from 'moment';
 import {CollaboratorRoleEnum} from "../../enum/collaborator-role-enum";
+import {createLogErrorHandler} from "@angular/compiler-cli/ngcc/src/execution/tasks/completion";
+import {filter, map, tap} from "rxjs/operators";
+import {DayOff} from "../../model/dayOff";
+import {DaysOff} from "../../model/daysOff";
 
 @Component({
   selector: 'app-histo',
@@ -23,32 +27,42 @@ export class HistoComponent implements OnInit {
   constructor(
     private histoService: HistoService,
     private authService: AuthService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
 
     this.user = this.authService.getUserFromLocalCache();
-    if (this.user.role !== CollaboratorRoleEnum.MANAGER){
-      return;
-    }
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.histoService.getAllDayOffByIdUser(this.user.id).subscribe((collab) => {
-      console.log(collab);
-      this.collaborators = collab;
-    });
+
+
     this.getGraphByYear(moment().year());
   }
-  getGraphByYear(yearChoice: number) {
-    console.log(this.user);
 
+  getGraphByYear(yearChoice: number) {
     this.currentYear < yearChoice
       ? (this.currentYear -= 1)
       : (this.currentYear += 1);
+    this.histoService.getAllDayOff().pipe(
+      map((collaborators: Collaborator[]) => collaborators.map((c: Collaborator) => c.daysOffs.filter((d:DayOff) =>{
+        let splitDateStart = d.startDate.split("/");
+        let dateDayOff = moment(splitDateStart[2]+'-'+splitDateStart[1]+'-'+splitDateStart[0]).locale("fr").format("YYYY");
+        let currentDate = parseInt(String(this.currentYear));
+        let dateActual = moment(currentDate+'-01-01').format("YYYY");
+        return dateDayOff == dateActual;
+      })))
+    ).subscribe(result => console.log(result));
+    /*this.histoService.getAllDayOff().subscribe((collab) => {
+      this.collaborators = collab;
+      collab.map((collaborator)=>{
+        collaborator.daysOffs.map((dayOffs)=> console.log(dayOffs.startDate)).filter((date)=>console.log(date))
+      })
+    });*/
+
   }
+
   lineChartData: ChartDataSets[] = [
-    { data: [85, 72, 78, 75, 77, 75], label: 'RTT' },
-    { data: [25, 45, 46, 79, 95, 58], label: 'CP' },
+    {data: [85, 72, 78, 75, 77, 75], label: 'RTT'},
+    {data: [25, 45, 46, 79, 95, 58], label: 'CP'},
   ];
 
   lineChartLabels: Label[] = [

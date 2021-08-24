@@ -21,6 +21,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import {HistoComponent} from "./components/histo/histo.component";
 import {ChartsModule} from "ng2-charts";
+import {DayOffFormComponent} from "./components/day-off-form/day-off-form.component";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {ChartsModule} from "ng2-charts";
     HomeComponent,
     LoginComponent,
     CalendarComponent,
-    HistoComponent
+    HistoComponent,
+    DayOffFormComponent
   ],
   imports: [
     BrowserModule,

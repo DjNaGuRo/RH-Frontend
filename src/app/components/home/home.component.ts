@@ -1,7 +1,7 @@
-import { Collaborator } from 'src/app/model/collaborator';
-import { Component, OnInit } from '@angular/core';
-import { User } from '../../model/user';
-import { AuthService } from '../../services/auth.service';
+import {Collaborator} from 'src/app/model/collaborator';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
+import {CollaboratorRoleEnum} from "../../enum/collaborator-role-enum";
 
 @Component({
   selector: 'app-home',
@@ -10,9 +10,16 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomeComponent implements OnInit {
   user!: Collaborator;
-  constructor(private authService: AuthService) {}
+  authorize = true;
+
+  constructor(private authService: AuthService) {
+  }
 
   ngOnInit(): void {
     this.user = this.authService.getUserFromLocalCache();
+    // @ts-ignore
+    if (this.user.role !== CollaboratorRoleEnum[CollaboratorRoleEnum.MANAGER]) {
+      this.authorize = false;
+    }
   }
 }
