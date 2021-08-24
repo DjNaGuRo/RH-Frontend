@@ -5,11 +5,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DayOffToCreate } from 'src/app/model/dayOff';
 import { DayOffService } from 'src/app/services/day-off.service';
 import * as moment from 'moment';
+import { CollaboratorRoleEnum } from './../../enum/collaborator-role-enum';
 import { EnumType } from 'typescript';
 import { DayOffTypeEnum } from 'src/app/enum/dayoff-type-enum';
 import { NotifierService } from 'angular-notifier';
 import { NotificationType } from 'src/app/enum/notification-type.enum';
 import { HttpErrorResponse } from '@angular/common/http';
+import { UserService } from 'src/app/services/user.service';
+import { Collaborator } from 'src/app/model/collaborator';
 
 
 @Component({
@@ -19,11 +22,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 
 export class DayOffFormComponent {
-  closeResult = '';
   minEndDate!: NgbDateStruct;
   maxStartDate!: NgbDateStruct;
   dayOffForm!: FormGroup;
   selectedValue = "CP";
+  collaborator?: Collaborator;
 
   current = new Date();
   minDate: NgbDateStruct = {
@@ -33,7 +36,7 @@ export class DayOffFormComponent {
 
   constructor(private modalService: NgbModal, private fb: FormBuilder,
      private config: NgbDatepickerConfig, private dayOffService: DayOffService,
-     private notifierService: NotifierService) {
+     private notifierService: NotifierService, private userService: UserService) {
     config.outsideDays = 'hidden';
   }
 
@@ -50,6 +53,19 @@ export class DayOffFormComponent {
     });
     this.dayOffForm.get('startDate')?.valueChanges.subscribe(startDate => this.minEndDate = startDate);
     this.dayOffForm.get('endDate')?.valueChanges.subscribe(endDate => this.maxStartDate = endDate);
+    
+    this.userService.getCollaborator().subscribe(collaborator => {
+      this.collaborator = collaborator
+    }
+  )}
+
+  // Vérifier le rôle de l'utilisateur pour donner accès au jours férié et RTTE dans le formulaire
+  get administrator(){
+    if (this.collaborator?.role.toString() === CollaboratorRoleEnum[CollaboratorRoleEnum.ADMINISTRATOR]) {
+      return true;
+    } else {
+      return false
+    }
   }
 
   get DayOffTypeIsValid() {
