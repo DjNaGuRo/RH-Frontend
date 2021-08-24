@@ -91,7 +91,6 @@ export class CalendarComponent implements OnInit {
     }
     this.daysOffMonth = daysOffMonthFormat;
   }
-
   daysOffForDepartment(arrDays: moment.Moment[]) {
     if (this.collaborators) {
       // Nous rajoutons à l'interface CollaboratorCalendar chaque collaborator du departement avec un tableau vide de jour de congés
@@ -117,7 +116,6 @@ export class CalendarComponent implements OnInit {
       }
     }
   }
-
   daysOffForCollaborator(arrDays: moment.Moment[]) {
     if (this.collaborator) {
       const collabCalendar: CollaboratorCalendar = {
