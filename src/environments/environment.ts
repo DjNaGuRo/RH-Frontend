@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   baseUrlApi,
   urlResourceCalendar: `${baseUrlApi}/calendar`,
+  urlResourceCollaborator : `${baseUrlApi}/collaborator`,
   apiUrl: 'http://localhost:8888',
 };
 
