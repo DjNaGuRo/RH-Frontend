@@ -22,6 +22,7 @@ import {HistoComponent} from "./components/histo/histo.component";
 import {ChartsModule} from "ng2-charts";
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { DayOffFormComponent } from './components/day-off-form/day-off-form.component';
+import { RecapDayOffComponent } from './components/recap-day-off/recap-day-off.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { DayOffFormComponent } from './components/day-off-form/day-off-form.comp
     LoginComponent,
     CalendarComponent,
     HistoComponent,
-    DayOffFormComponent
+    DayOffFormComponent,
+    RecapDayOffComponent
   ],
   imports: [
     BrowserModule,
