@@ -1,5 +1,4 @@
-<hr>
-<div class="table-responsive col-12 container-fluid">
+<div class="text-center calendary">
   <h1> {{currentMonthLetter}} - {{currentYear}}</h1>
   <div class="btn-group btn-group-toggle">
     <label class="btn-primary" ngbButtonLabel>
@@ -9,29 +8,47 @@
       <input type="checkbox" (click)="getDaysArrayByMonth(currentMonth)"> Suivant
     </label>
   </div>
-  <table class="table table-bordered border-dark ">
-    <thead class="table-primary">
-      <tr>
-        <th scope="col">Nom employé</th>
-        <th *ngFor="let dayOffMonth of daysOffMonth" scope="col">
-          <div *ngIf="dayOffMonth.includes('sa') || dayOffMonth.includes('di');then weekend else week"> </div>
-          <ng-template #weekend ><p class="text-danger">{{dayOffMonth}}</p></ng-template>
-          <ng-template #week ><p class="text-primary">{{dayOffMonth}}</p></ng-template>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <mat-progress-bar mode="indeterminate" *ngIf="collaboratorsCalendar.length === 0"></mat-progress-bar>
-      <tr *ngFor="let collaboratorCalendar of collaboratorsCalendar">
-        <th scope="row">{{collaboratorCalendar.firstName}}<br>{{collaboratorCalendar.lastName}}</th>
-        <td *ngFor="let dayOff of collaboratorCalendar.daysOffMonth">
-          <div *ngIf="dayOff">
-            <button type="button" class="{{dayOff.status}} btn btn-secondary" data-toggle="tooltip" data-placement="top" title="{{dayOff.reason}}">
-            {{dayOff.type}}
-            </button>
-        </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive col-12 container-fluid">
+
+    <table class="table table-bordered border-dark ">
+      <thead class="table-primary">
+        <tr>
+          <th scope="col">Nom employé</th>
+          <th *ngFor="let dayOffMonth of daysOffMonth" scope="col">
+            <div *ngIf="dayOffMonth.includes('sa') || dayOffMonth.includes('di');then weekend else week"> </div>
+            <ng-template #weekend>
+              <p class="text-danger">{{dayOffMonth}}</p>
+            </ng-template>
+            <ng-template #week>
+              <p class="text-primary">{{dayOffMonth}}</p>
+            </ng-template>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <mat-progress-bar mode="indeterminate" *ngIf="collaboratorsCalendar.length === 0"></mat-progress-bar>
+        <tr *ngFor="let collaboratorCalendar of collaboratorsCalendar">
+          <th scope="row">{{collaboratorCalendar.firstName}}<br>{{collaboratorCalendar.lastName}}</th>
+          <td *ngFor="let dayOff of collaboratorCalendar.daysOffMonth" class="dayOffTd">
+            <div *ngIf="dayOff">
+              <div class="col">
+                <div ngbDropdown container="body" class="d-inline-block">
+                  <button class="{{dayOff.status}} btn btn-primary" id="dropdownBasic1" data-toggle="tooltip"
+                    data-placement="top" title="{{dayOff.reason}}" ngbDropdownToggle>{{dayOff.type}}</button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="text-light"
+                    *ngIf="dayOff.type === DayOffTypeEnum.RTTS || dayOff.type === DayOffTypeEnum.CSS || dayOff.type === DayOffTypeEnum.CP">
+                    <button ngbDropdownItem
+                      *ngIf="dayOff.status == DayOffStatusEnum.INITIAL || dayOff.status == DayOffStatusEnum.REJECTED">Modifier</button>
+                    <button ngbDropdownItem
+                      *ngIf="dayOff.status == DayOffStatusEnum.INITIAL || dayOff.status == DayOffStatusEnum.REJECTED" (click)="deleteDayOff(dayOff)">Supprimer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>
