@@ -1,3 +1,4 @@
+import { Collaborator } from 'src/app/model/collaborator';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/model/user';
@@ -9,7 +10,7 @@ import { NotificationService } from '../../services/notification.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  user!: User;
+  user!: Collaborator;
   constructor(
     public router: Router,
     public notifier: NotificationService,
@@ -24,7 +25,7 @@ export class HeaderComponent implements OnInit {
     this.authService.logOut();
   }
 
-  getUser(): User {
+  getUser(): Collaborator {
     this.user = this.authService.getUserFromLocalCache();
     return this.user;
   }

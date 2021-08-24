@@ -1,4 +1,5 @@
 export class User {
+  public id: number;
   public firstName: string;
   public lastName: string;
   public username: string;
@@ -9,6 +10,7 @@ export class User {
   public authorities: [];
 
   constructor() {
+    this.id = 0;
     this.firstName = '';
     this.lastName = '';
     this.username = '';

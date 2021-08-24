@@ -1,15 +1,24 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, CanDeactivate, Router, RouterStateSnapshot,} from '@angular/router';
-import {AuthService} from '../services/auth.service';
-import {NotificationService} from "../services/notification.service";
-import {NotificationType} from "../enum/notification-type.enum";
+import { Injectable } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanDeactivate,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { NotificationService } from '../services/notification.service';
+import { NotificationType } from '../enum/notification-type.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router, private notificationService: NotificationService) {
-  }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private notificationService: NotificationService
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
