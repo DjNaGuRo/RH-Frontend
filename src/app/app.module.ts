@@ -1,3 +1,4 @@
+import { DayOffFormComponent } from './components/day-off-form/day-off-form.component';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NotificationModule } from './notification.module';
