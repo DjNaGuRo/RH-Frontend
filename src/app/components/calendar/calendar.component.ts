@@ -1,7 +1,9 @@
+import { CollaboratorRoleEnum } from './../../enum/collaborator-role-enum';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Collaborator } from 'src/app/model/collaborator';
 import { DayOff } from 'src/app/model/dayOff';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 // Création d'une interface qui va permettre d'afficher le tableau des jours de congé de chaque employé
@@ -25,19 +27,28 @@ export class CalendarComponent implements OnInit {
   daysOffMonth?: string[];
   // Liste des collaborators du département d'un Manager
   collaborators?: Collaborator[];
+  collaborator?: Collaborator;
   // Initialisation du calendrier permettant l'affichage des jours de congés de chaques employés
   collaboratorsCalendar: CollaboratorCalendar[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private authService: AuthService) {}
 
   ngOnInit(): void {
     // Récupération des collaborators du département d'un Manager et lancement de la fonction permettant d'initialiser le calendrier
-    this.userService.getCollaborator().subscribe((collaborators) => {
-      this.collaborators = collaborators;
-      console.log(this.collaborators);
+    this.userService.getCollaborator().subscribe(collaborator => {
+      this.collaborator = collaborator
+      console.log(this.collaborator?.role);
 
-      this.getDaysArrayByMonth(moment().month());
-    });
+      if (this.collaborator?.role.toString() === CollaboratorRoleEnum[CollaboratorRoleEnum.MANAGER]) {
+
+        this.userService.getCollaborators().subscribe(collaborators => {
+          this.collaborators = collaborators
+          this.getDaysArrayByMonth(moment().month());
+        });
+      } else {
+        this.getDaysArrayByMonth(moment().month());
+      }
+    })
   }
   // Fonction permettant d'afficher les jours d'un mois donné et traitement de l'affichage des jours de congés de chaque collaborator
   getDaysArrayByMonth(monthChoice: number) {
