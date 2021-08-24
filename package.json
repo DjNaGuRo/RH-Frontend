@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href=/rhproject-front/",
+    "build": "ng build --base-href=https://dussartguillaume.gitlab.io/rhproject-front/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
