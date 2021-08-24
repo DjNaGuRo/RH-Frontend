@@ -1,14 +1,16 @@
 <div class="container mt-5">
   <div class="prev-next">
-    <a href="#" (click)="getGraphByYear(currentYear+2)" class="previous round">&#8249;</a>
-    <a href="#" (click)="getGraphByYear(currentYear)" class="next round">&#8250;</a>
+    <button  (click)="getGraphByYear(currentYear+2)" class="previous round">&#8249;</button>
+    <button  (click)="getGraphByYear(currentYear)" class="next round">&#8250;</button>
   </div>
   <h1 class="text-center">Histogramme</h1>
-  <div class="year">{{currentYear-1}}</div>
+  <div class="year">{{currentYear - 1}}</div>
+
 
 </div>
 <div class="chart-wrapper">
   <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-    [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
+          [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
+          [plugins]="lineChartPlugins">
   </canvas>
 </div>

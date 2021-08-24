@@ -1,9 +1,6 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-  HttpResponse,
-} from '@angular/common/http';
+import { Collaborator } from 'src/app/model/collaborator';
+import { Router } from '@angular/router';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
@@ -22,14 +19,16 @@ export class AuthService {
    *
    * @param http
    */
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
   /**
    *
    * @param user
    * @returns
    */
-  public login(user: User): Observable<HttpResponse<User>> {
-    return this.http.post<User>(`${this.host}/auth/login`, user, {
+  public login(user: Collaborator): Observable<HttpResponse<Collaborator>> {
+    console.log(user);
+
+    return this.http.post<Collaborator>(`${this.host}/auth/login`, user, {
       observe: 'response',
     });
   }
@@ -47,7 +46,7 @@ export class AuthService {
    *
    */
 
-  public addUserToLocalCache(user: User): void {
+  public addUserToLocalCache(user: Collaborator): void {
     localStorage.setItem('user', JSON.stringify(user));
   }
   /**
@@ -55,7 +54,7 @@ export class AuthService {
    * @returns
    */
   // @ts-ignore
-  public getUserFromLocalCache(): User {
+  public getUserFromLocalCache(): Collaborator {
     if (localStorage.getItem('user')) {
       // @ts-ignore
       return JSON.parse(localStorage.getItem('user'));
@@ -97,5 +96,6 @@ export class AuthService {
     this.loggedInUsername = null;
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }

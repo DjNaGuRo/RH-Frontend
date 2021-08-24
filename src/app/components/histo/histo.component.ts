@@ -1,12 +1,12 @@
-import { AuthService } from './../../services/auth.service';
-import { Subscription } from 'rxjs';
-import { HistoService } from './../../services/histo.service';
-import { ChartType } from 'chart.js';
-import { Component, OnInit } from '@angular/core';
-import { ChartDataSets } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
+import {Collaborator} from 'src/app/model/collaborator';
+import {AuthService} from './../../services/auth.service';
+import {Subscription} from 'rxjs';
+import {HistoService} from './../../services/histo.service';
+import {ChartDataSets, ChartType} from 'chart.js';
+import {Component, OnInit} from '@angular/core';
+import {Color, Label} from 'ng2-charts';
 import * as moment from 'moment';
-import { User } from 'src/app/model/user';
+import {CollaboratorRoleEnum} from "../../enum/collaborator-role-enum";
 
 @Component({
   selector: 'app-histo',
@@ -18,7 +18,7 @@ export class HistoComponent implements OnInit {
   daysOffYear?: string[];
   collaborators: any = [];
   subscriptions: Subscription[] = [];
-  user?: User;
+  user?: Collaborator;
 
   constructor(
     private histoService: HistoService,
@@ -26,7 +26,11 @@ export class HistoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     this.user = this.authService.getUserFromLocalCache();
+    if (this.user.role !== CollaboratorRoleEnum.MANAGER){
+      return;
+    }
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.histoService.getAllDayOffByIdUser(this.user.id).subscribe((collab) => {

@@ -1,0 +1,37 @@
+<hr>
+<div class="table-responsive col-12 container-fluid">
+  <h1> {{currentMonthLetter}} - {{currentYear}}</h1>
+  <div class="btn-group btn-group-toggle">
+    <label class="btn-primary" ngbButtonLabel>
+      <input type="checkbox" (click)="getDaysArrayByMonth(currentMonth-2)"> Précédent
+    </label>
+    <label class="btn-primary" ngbButtonLabel>
+      <input type="checkbox" (click)="getDaysArrayByMonth(currentMonth)"> Suivant
+    </label>
+  </div>
+  <table class="table table-bordered border-dark ">
+    <thead class="table-primary">
+      <tr>
+        <th scope="col">Nom employé</th>
+        <th *ngFor="let dayOffMonth of daysOffMonth" scope="col">
+          <div *ngIf="dayOffMonth.includes('sa') || dayOffMonth.includes('di');then weekend else week"> </div>
+          <ng-template #weekend ><p class="text-danger">{{dayOffMonth}}</p></ng-template>
+          <ng-template #week ><p class="text-primary">{{dayOffMonth}}</p></ng-template>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <mat-progress-bar mode="indeterminate" *ngIf="collaboratorsCalendar.length === 0"></mat-progress-bar>
+      <tr *ngFor="let collaboratorCalendar of collaboratorsCalendar">
+        <th scope="row">{{collaboratorCalendar.firstName}}<br>{{collaboratorCalendar.lastName}}</th>
+        <td *ngFor="let dayOff of collaboratorCalendar.daysOffMonth">
+          <div *ngIf="dayOff">
+            <button type="button" class="{{dayOff.status}} btn btn-secondary" data-toggle="tooltip" data-placement="top" title="{{dayOff.reason}}">
+            {{dayOff.type}}
+            </button>
+        </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

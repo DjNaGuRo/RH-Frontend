@@ -1,25 +1,26 @@
-import {NotificationModule} from './notification.module';
-import {UserService} from './services/user.service';
-import {AuthService} from './services/auth.service';
-import {AuthGuard} from './guards/auth.guard';
-import { NgModule, Component } from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NotificationModule } from './notification.module';
+import { UserService } from './services/user.service';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {HeaderComponent} from './components/header/header.component';
-import {FooterComponent} from './components/footer/footer.component';
-import {HomeComponent} from './components/home/home.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {LoginComponent} from './components/login/login.component';
-import {ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
-import {NotificationService} from "./services/notification.service";
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NotificationService } from './services/notification.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HistoComponent } from './components/histo/histo.component';
-import { ChartsModule } from 'ng2-charts';
-
-
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HomeComponent } from './components/home/home.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoginComponent } from './components/login/login.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
+import {HistoComponent} from "./components/histo/histo.component";
+import {ChartsModule} from "ng2-charts";
 
 @NgModule({
   declarations: [
@@ -28,20 +29,33 @@ import { ChartsModule } from 'ng2-charts';
     FooterComponent,
     HomeComponent,
     LoginComponent,
+    CalendarComponent,
     HistoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    ReactiveFormsModule,
     HttpClientModule,
-    NotificationModule,
+    MatProgressBarModule,
     BrowserAnimationsModule,
-    ChartsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    NotificationModule,
+    ChartsModule,
   ],
-  providers: [AuthGuard,AuthService, UserService,NotificationService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    AuthGuard,
+    AuthService,
+    UserService,
+    NotificationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

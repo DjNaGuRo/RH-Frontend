@@ -1,27 +1,38 @@
-import { NotificationType } from './../../enum/notification-type.enum';
-
+import { Collaborator } from 'src/app/model/collaborator';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NotifierService } from 'angular-notifier';
+import { User } from 'src/app/model/user';
 import { AuthService } from '../../services/auth.service';
-
+import { NotificationService } from '../../services/notification.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  user!: Collaborator;
   constructor(
     public router: Router,
-    public notifier: NotifierService,
+    public notifier: NotificationService,
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getUser();
+  }
 
   logOut() {
     this.authService.logOut();
-    this.notifier.notify(NotificationType.SUCCESS, 'Vous maitenant deconnecte');
-    this.router.navigateByUrl('/login');
+  }
+
+  getUser(): Collaborator {
+    this.user = this.authService.getUserFromLocalCache();
+    return this.user;
+  }
+  isLoggedIn(): boolean {
+    if (localStorage.getItem('user')) {
+      return true;
+    }
+    return false;
   }
 }

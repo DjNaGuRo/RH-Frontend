@@ -1,13 +1,13 @@
-import { NotifierService } from 'angular-notifier';
-import { HeaderType } from '../../enum/header-type.enum';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from '../../model/user';
-import { Subscription } from 'rxjs';
-import { NotificationType } from '../../enum/notification-type.enum';
+import {Collaborator} from 'src/app/model/collaborator';
+import {NotifierService} from 'angular-notifier';
+import {HttpResponse, HttpErrorResponse} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {AuthService} from '../../services/auth.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {User} from '../../model/user';
+import {Subscription} from 'rxjs';
+import {NotificationType} from '../../enum/notification-type.enum';
 
 @Component({
   selector: 'app-login',
@@ -18,12 +18,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   formLogin!: FormGroup;
   submitted = false;
   private subscriptions: Subscription[] = [];
+  isDisabled = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
     private notifierService: NotifierService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     if (this.authService.isUserLoggedIn()) {
@@ -33,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.formLogin = this.formBuilder.group({
-      username: ['', [Validators.required]],
+      email: ['', [Validators.required]],
       password: ['', Validators.required],
     });
   }
@@ -51,20 +54,20 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
     this.onLogin(this.formLogin.value);
-    //this.router.navigateByUrl('/');
   }
 
   // @ts-ignore
-  onLogin(user: User): void {
+  onLogin(user: Collaborator): void {
+    this.isDisabled=true;
     this.subscriptions.push(
       this.authService.login(user).subscribe(
-        (response: HttpResponse<User>) => {
+        (response: HttpResponse<Collaborator>) => {
           console.log(response);
           const token = response.headers.get('Jwt-Token');
           console.log(response.headers.get('Jwt-Token'));
           // @ts-ignore
           this.authService.saveToken(token);
-          this.authService.addUserToLocalCache(<User>response.body);
+          this.authService.addUserToLocalCache(<Collaborator>response.body);
           this.notifierService.notify(
             NotificationType.SUCCESS,
             'Vous etes connecte !'
@@ -77,6 +80,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       )
     );
   }
+
   private sendErrorNotification(
     notificationType: NotificationType,
     message: string
@@ -90,6 +94,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       );
     }
   }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }

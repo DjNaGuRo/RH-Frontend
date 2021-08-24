@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-
+/* Importing Angular Material. */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 @import "~angular-notifier/styles";
@@ -104,10 +105,6 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
 }
 
-html,
-body {
-  height: 100%;
-}
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;

@@ -2,7 +2,6 @@ body {
   margin: 0;
   padding: 0;
   background-color: #17a2b8;
-  height: 100vh;
 }
 #login {
   height: 550px;
@@ -15,4 +14,26 @@ body {
 .text-errors-password {
   position: absolute;
   top: 237px;
+}
+.login-container {
+  height: 555px;
+}
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner .8s linear infinite;
 }
