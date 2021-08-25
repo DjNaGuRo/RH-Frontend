@@ -78,20 +78,20 @@ export class HistoComponent implements OnInit {
         //deefine color for graph
         this.lineChartColors = [
           {
-            borderColor: 'pink',
-            backgroundColor: 'pink',
+            borderColor: '#7385C7',
+            backgroundColor: '#9B97C4',
           }, {
-            borderColor: 'black',
-            backgroundColor: 'rgba(255,255,0,0.28)',
+            borderColor: '#293F94',
+            backgroundColor: '#AAB6FA',
           }, {
-            borderColor: 'black',
-            backgroundColor: 'rgba(255,255,0,0.28)',
+            borderColor: '#AAE5FA',
+            backgroundColor: '#D6E5F7',
           }, {
-            borderColor: 'black',
-            backgroundColor: 'rgba(255,255,0,0.28)',
+            borderColor: '#FBA16C',
+            backgroundColor: '#F8CC9A',
           }, {
-            borderColor: 'black',
-            backgroundColor: 'rgba(255,255,0,0.28)',
+            borderColor: '#C78673',
+            backgroundColor: '#C4A897',
           }
         ];
 
