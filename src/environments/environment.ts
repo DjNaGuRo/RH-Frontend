@@ -7,6 +7,7 @@ export const environment = {
   baseUrlApi,
   urlResourceCalendar: `${baseUrlApi}/calendar`,
   urlResourceCollaborator : `${baseUrlApi}/collaborator`,
+  urlResourceAddDayOff : `${baseUrlApi}/post/dayoff`,
   apiUrl: 'http://localhost:8888',
 };
 

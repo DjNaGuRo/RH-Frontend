@@ -20,8 +20,10 @@ import { LoginComponent } from './components/login/login.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
-import {HistoComponent} from "./components/histo/histo.component";
-import {ChartsModule} from "ng2-charts";
+import { ChartsModule } from 'ng2-charts';
+import { HistoComponent } from './components/histo/histo.component';
+
+
 
 @NgModule({
   declarations: [
