@@ -10,7 +10,7 @@
   <div class="modal-body">
     <form [formGroup]="dayOffForm">
       <label for="dayOffType">Type de congé</label><br>
-      <select class="form-select" formControlName="dayOffType" aria-label="Default select example"
+      <select class="form-select" id="dayOffType" formControlName="dayOffType" aria-label="Default select example"
         [(ngModel)]="selectedValue">
         <option value="CP">CP</option>
         <option value="RTTS">RTTS</option>
@@ -72,7 +72,7 @@
       <div class="form-group">
         <label for="endtDate">Date de fin</label>
         <div class="input-group">
-          <input required id="endDate" class="form-control" placeholder="yyyy-mm-dd" formControlName="endDate"
+          <input required id="endDate" id="endtDate" class="form-control" placeholder="yyyy-mm-dd" formControlName="endDate"
             [readonly]="true" ngbDatepicker #endDate="ngbDatepicker" [minDate]="minEndDate">
 
           <div *ngIf="StartDateIsInvalid" placement="left"
@@ -92,7 +92,7 @@
               </button>
             </div>
           </div>
-          
+
           <div *ngIf="StartDateIsValid">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary calendar" (click)="endDate.toggle()" type="button"
@@ -117,7 +117,7 @@
   </p> -->
       <div class="form-floating">
         <label for="reason">Motif :</label>
-        <textarea class="form-control" placeholder="Motif de votre absence (facultatif)" id="floatingTextarea"
+        <textarea class="form-control" id="reason" placeholder="Motif de votre absence (facultatif)" id="floatingTextarea"
           formControlName="reason"></textarea>
       </div>
       <p *ngIf="reasonIsInvalid" class="error-message">

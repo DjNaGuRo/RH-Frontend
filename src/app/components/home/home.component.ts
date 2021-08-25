@@ -22,4 +22,18 @@ export class HomeComponent implements OnInit {
       this.authorize = false;
     }
   }
+
+  get isAdmin(): boolean {
+    if (this.user.role.toString() === CollaboratorRoleEnum[CollaboratorRoleEnum.ADMINISTRATOR]) {
+      return true;
+    }
+    return false;
+  }
+
+  get isManager(): boolean {
+    if (this.user.role.toString() === CollaboratorRoleEnum[CollaboratorRoleEnum.MANAGER]) {
+      return true;
+    }
+    return false;
+  }
 }
