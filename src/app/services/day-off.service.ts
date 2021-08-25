@@ -12,6 +12,8 @@ export class DayOffService {
   }
 
   createDayOff(dayOffToCreate : DayOffToCreate) {
-    return this.http.post<DayOff>(environment.urlResourceAddDayOff, dayOffToCreate) 
+    return this.http.post<DayOff>(environment.urlResourceAddDayOff, dayOffToCreate)
   }
-}
+  deleteDayOff(dayOff:DayOff) {
+    return this.http.post<string>(environment.urlResourceDeleteDayOff, dayOff)
+  }
