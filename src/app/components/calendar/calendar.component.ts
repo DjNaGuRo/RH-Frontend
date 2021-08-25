@@ -190,6 +190,15 @@ export class CalendarComponent implements OnInit {
   public get DayOffTypeEnum() {
     return DayOffTypeEnum;
   }
+  public get CollaboratorRoleEnum() {
+    return CollaboratorRoleEnum;
+  }
+  acceptDayOff(dayOff: DayOff): void {
+
+  }
+  refuseDayOff(dayOff: DayOff): void {
+
+  }
   deleteDayOff(dayOff: DayOff): void {
     this.dayOffService.deleteDayOff(dayOff).subscribe(response => {
       this.notifierService.notify(
