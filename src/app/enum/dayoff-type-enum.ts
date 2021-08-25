@@ -1,3 +1,2 @@
 export enum DayOffTypeEnum {
-  RTTE,RTTS,CSS,CP,F
-}
+  RTTE = 'RTTE',RTTS= 'RTTS',CSS= 'CSS',CP= 'CP',F= 'F'}
