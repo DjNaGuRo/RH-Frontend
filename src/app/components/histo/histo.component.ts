@@ -6,7 +6,6 @@ import {ChartDataSets, ChartType} from 'chart.js';
 import {Component, OnInit} from '@angular/core';
 import {Color, Label} from 'ng2-charts';
 import * as moment from 'moment';
-import {map} from 'rxjs/operators';
 import {DayOff} from '../../model/dayOff';
 import {DayOffTypeEnum} from '../../enum/dayoff-type-enum';
 
@@ -14,13 +13,6 @@ interface DayOffMonths {
   type: DayOffTypeEnum;
   dayOffs: DayOff[];
 }
-
-// const exemple:DayOffMonths = {
-//   type: DayOffTypeEnum.CP,
-//   dayOffs:[
-//     {id: 12, endDate: ''}
-//   ]
-// }
 
 @Component({
   selector: 'app-histo',
@@ -127,9 +119,9 @@ export class HistoComponent implements OnInit {
   getMonths() {
     moment.locale('fr');
     let arrayMonths = [];
-    console.log(moment.months());
+
     for (let i = 0; i < moment.months().length; i++) {
-      console.log(moment.months()[i]);
+
       arrayMonths.push(moment.months()[i]);
     }
     return arrayMonths;
