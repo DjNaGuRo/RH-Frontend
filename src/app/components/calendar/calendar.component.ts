@@ -7,6 +7,10 @@ import { DayOff } from 'src/app/model/dayOff';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { DayOffTypeEnum } from 'src/app/enum/dayoff-type-enum';
+import { DayOffService } from 'src/app/services/day-off.service';
+import { NotifierService } from 'angular-notifier';
+import { NotificationType } from 'src/app/enum/notification-type.enum';
+import { HttpErrorResponse } from '@angular/common/http';
 
 // Création d'une interface qui va permettre d'afficher le tableau des jours de congé de chaque employé
 interface CollaboratorCalendar extends Collaborator {
@@ -35,7 +39,9 @@ export class CalendarComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dayOffService: DayOffService,
+    private notifierService: NotifierService
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +57,19 @@ export class CalendarComponent implements OnInit {
         this.getDaysArrayByMonth(moment().month());
       }
     });
+  }
+  private sendErrorNotification(
+    notificationType: NotificationType,
+    message: string
+  ): void {
+    if (message) {
+      this.notifierService.notify(notificationType, message);
+    } else {
+      this.notifierService.notify(
+        notificationType,
+        'Une erreur est survenue. svp recommencer !'
+      );
+    }
   }
   // Fonction permettant d'afficher les jours d'un mois donné et traitement de l'affichage des jours de congés de chaque collaborator
   getDaysArrayByMonth(monthChoice: number) {
@@ -171,5 +190,16 @@ export class CalendarComponent implements OnInit {
   public get DayOffTypeEnum() {
     return DayOffTypeEnum;
   }
-  deleteDayOff(dayOff: DayOff): void {}
+  deleteDayOff(dayOff: DayOff): void {
+    this.dayOffService.deleteDayOff(dayOff).subscribe(response => {
+      this.notifierService.notify(
+        NotificationType.SUCCESS,
+        'Votre jour de congé a été supprimé'
+      )
+      this.ngOnInit()
+    },
+    (error:HttpErrorResponse) => {
+      this.sendErrorNotification(NotificationType.ERROR, error.error.text)
+    })
+  }
 }
