@@ -15,8 +15,8 @@
         <option value="CP">CP</option>
         <option value="RTTS">RTTS</option>
         <option value="CSS">CSS</option>
-        <option value="RTTE">RTTE</option>
-        <option value="F">F</option>
+        <option *ngIf="administrator" value="RTTE">RTTE</option>
+        <option *ngIf="administrator" value="F">F</option>
         <!-- rendre obligatoire toutes les champs du formulaire et faire en sorte que l'accès à certains type de congé
                      soit disponibles qu'en fonction de l'utilisateur connecté (administrator/manager/employe)  -->
       </select>
