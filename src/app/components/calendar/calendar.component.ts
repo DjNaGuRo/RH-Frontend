@@ -91,7 +91,8 @@ export class CalendarComponent implements OnInit {
       daysInMonth--;
     }
     arrDays.reverse();
-    this.currentMonthLetter = arrDays[0].locale('fr').format('MMMM');
+    let currentMonthLetter = arrDays[0].locale('fr').format('MMMM');
+    this.currentMonthLetter = currentMonthLetter.charAt(0).toUpperCase() + currentMonthLetter.substring(1);
     this.findDayOff(arrDays);
   }
 
@@ -194,10 +195,43 @@ export class CalendarComponent implements OnInit {
     return CollaboratorRoleEnum;
   }
   acceptDayOff(dayOff: DayOff): void {
-
+    let dayOffToChange = this.setDayOffToChange(dayOff,DayOffStatusEnum.VALIDATED)
+    this.dayOffService.createDayOff(dayOffToChange).subscribe(response => {
+      this.notifierService.notify(
+        NotificationType.SUCCESS,
+        'Cette demande d\'absence a été validé'
+      )
+      this.ngOnInit()
+    },
+    (error:HttpErrorResponse) => {
+      this.sendErrorNotification(NotificationType.ERROR, error.error.text)
+    })
   }
   refuseDayOff(dayOff: DayOff): void {
-
+    let dayOffToChange = this.setDayOffToChange(dayOff,DayOffStatusEnum.REJECTED)
+    this.dayOffService.createDayOff(dayOffToChange).subscribe(response => {
+      this.notifierService.notify(
+        NotificationType.SUCCESS,
+        'Cette demande d\'absence a été refusé'
+      )
+      this.ngOnInit()
+    },
+    (error:HttpErrorResponse) => {
+      this.sendErrorNotification(NotificationType.ERROR, error.error.text)
+    })
+  }
+  setDayOffToChange(dayOff: DayOff,status: DayOffStatusEnum) : DayOff {
+    let dayOffToChange : DayOff = {
+      id : dayOff.id,
+      requestDate: dayOff.requestDate,
+      startDate: dayOff.startDate,
+      endDate: dayOff.endDate,
+      type: dayOff.type,
+      reason : dayOff.reason,
+      status : status,
+      collaborators: dayOff.collaborators
+    }
+    return dayOffToChange
   }
   deleteDayOff(dayOff: DayOff): void {
     this.dayOffService.deleteDayOff(dayOff).subscribe(response => {

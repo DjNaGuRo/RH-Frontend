@@ -17,3 +17,15 @@
 .table-primary, .table-primary > th, .table-primary > td {
     background-color: #80d0f0;
 }
+.table.active {
+  background: rgba(255,255,255,0.3);
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+  transform: scale(1);
+}
+.table-responsive {
+  cursor: grab;
+}
+.table-responsive button {
+  cursor: pointer;
+}
