@@ -31,16 +31,50 @@
           <th scope="row">{{collaboratorCalendar.firstName}}<br>{{collaboratorCalendar.lastName}}</th>
           <td *ngFor="let dayOff of collaboratorCalendar.daysOffMonth" class="dayOffTd">
             <div *ngIf="dayOff">
-              <div class="col">
+              <div class="col"
+                *ngIf="dayOff.type === DayOffTypeEnum.RTTS || dayOff.type === DayOffTypeEnum.CSS || dayOff.type === DayOffTypeEnum.CP && collaborator!.role === CollaboratorRoleEnum.ADMINISTRATOR || collaborator!.role === CollaboratorRoleEnum.EMPLOYE">
                 <div ngbDropdown container="body" class="d-inline-block">
                   <button class="{{dayOff.status}} btn btn-primary" id="dropdownBasic1" data-toggle="tooltip"
                     data-placement="top" title="{{dayOff.reason}}" ngbDropdownToggle>{{dayOff.type}}</button>
                   <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="text-light"
-                    *ngIf="dayOff.type === DayOffTypeEnum.RTTS || dayOff.type === DayOffTypeEnum.CSS || dayOff.type === DayOffTypeEnum.CP">
-                    <button ngbDropdownItem
-                      *ngIf="dayOff.status == DayOffStatusEnum.INITIAL || dayOff.status == DayOffStatusEnum.REJECTED">Modifier</button>
-                    <button ngbDropdownItem
-                      *ngIf="dayOff.status == DayOffStatusEnum.INITIAL || dayOff.status == DayOffStatusEnum.REJECTED" (click)="deleteDayOff(dayOff)">Supprimer</button>
+                    *ngIf="dayOff.status == DayOffStatusEnum.INITIAL || dayOff.status == DayOffStatusEnum.REJECTED">
+                    <button ngbDropdownItem>Modifier</button>
+                    <button ngbDropdownItem (click)="deleteDayOff(dayOff)">Supprimer</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col"
+                *ngIf="(dayOff.type === DayOffTypeEnum.RTTS || dayOff.type === DayOffTypeEnum.CSS || dayOff.type === DayOffTypeEnum.CP) && (collaborator!.role === CollaboratorRoleEnum.MANAGER)">
+                <div ngbDropdown container="body" class="d-inline-block">
+                  <button class="{{dayOff.status}} btn btn-primary" id="dropdownBasic1" data-toggle="tooltip"
+                    data-placement="top" title="{{dayOff.reason}}" ngbDropdownToggle>{{dayOff.type}}</button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="text-light">
+                    <div *ngIf="dayOff.status == DayOffStatusEnum.WAITING_FOR_VALIDATION">
+                      <button ngbDropdownItem (click)="acceptDayOff(dayOff)">Accepter</button>
+                      <button ngbDropdownItem (click)="refuseDayOff(dayOff)">Refuser</button>
+                    </div>
+                    <div
+                      *ngIf="dayOff.status == DayOffStatusEnum.INITIAL || dayOff.status == DayOffStatusEnum.REJECTED">
+                      <button ngbDropdownItem>Modifier</button>
+                      <button ngbDropdownItem (click)="deleteDayOff(dayOff)">Supprimer</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col"
+                *ngIf="(dayOff.type === DayOffTypeEnum.F || dayOff.type === DayOffTypeEnum.RTTE) && (collaborator!.role === CollaboratorRoleEnum.EMPLOYE || collaborator!.role ===  CollaboratorRoleEnum.MANAGER)">
+                <button class="{{dayOff.status}} btn btn-primary" data-toggle="tooltip" data-placement="top"
+                  title="{{dayOff.reason}}">{{dayOff.type}}</button>
+              </div>
+              <div class="col"
+                *ngIf="(dayOff.type === DayOffTypeEnum.F || dayOff.type === DayOffTypeEnum.RTTE) && (collaborator!.role === CollaboratorRoleEnum.ADMINISTRATOR)">
+                <div ngbDropdown container="body" class="d-inline-block">
+                  <button class="{{dayOff.status}} btn btn-primary" id="dropdownBasic1" data-toggle="tooltip"
+                    data-placement="top" title="{{dayOff.reason}}" ngbDropdownToggle>{{dayOff.type}}</button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="text-light"
+                    *ngIf="dayOff.status == DayOffStatusEnum.INITIAL || dayOff.status == DayOffStatusEnum.REJECTED">
+                    <button ngbDropdownItem>Modifier</button>
+                    <button ngbDropdownItem (click)="deleteDayOff(dayOff)">Supprimer</button>
                   </div>
                 </div>
               </div>
