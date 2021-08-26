@@ -10,7 +10,6 @@ import {CollaboratorRoleEnum} from "../../enum/collaborator-role-enum";
 import {createLogErrorHandler} from "@angular/compiler-cli/ngcc/src/execution/tasks/completion";
 import {filter, map, tap} from "rxjs/operators";
 import {DayOff} from "../../model/dayOff";
-import {DaysOff} from "../../model/daysOff";
 
 @Component({
   selector: 'app-histo',

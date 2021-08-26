@@ -7,6 +7,10 @@ import { DayOff } from 'src/app/model/dayOff';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { DayOffTypeEnum } from 'src/app/enum/dayoff-type-enum';
+import { DayOffService } from 'src/app/services/day-off.service';
+import { NotifierService } from 'angular-notifier';
+import { NotificationType } from 'src/app/enum/notification-type.enum';
+import { HttpErrorResponse } from '@angular/common/http';
 
 // Création d'une interface qui va permettre d'afficher le tableau des jours de congé de chaque employé
 interface CollaboratorCalendar extends Collaborator {
@@ -35,7 +39,9 @@ export class CalendarComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dayOffService: DayOffService,
+    private notifierService: NotifierService
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +57,19 @@ export class CalendarComponent implements OnInit {
         this.getDaysArrayByMonth(moment().month());
       }
     });
+  }
+  private sendErrorNotification(
+    notificationType: NotificationType,
+    message: string
+  ): void {
+    if (message) {
+      this.notifierService.notify(notificationType, message);
+    } else {
+      this.notifierService.notify(
+        notificationType,
+        'Une erreur est survenue. svp recommencer !'
+      );
+    }
   }
   // Fonction permettant d'afficher les jours d'un mois donné et traitement de l'affichage des jours de congés de chaque collaborator
   getDaysArrayByMonth(monthChoice: number) {
@@ -72,7 +91,8 @@ export class CalendarComponent implements OnInit {
       daysInMonth--;
     }
     arrDays.reverse();
-    this.currentMonthLetter = arrDays[0].locale('fr').format('MMMM');
+    let currentMonthLetter = arrDays[0].locale('fr').format('MMMM');
+    this.currentMonthLetter = currentMonthLetter.charAt(0).toUpperCase() + currentMonthLetter.substring(1);
     this.findDayOff(arrDays);
   }
 
@@ -171,5 +191,58 @@ export class CalendarComponent implements OnInit {
   public get DayOffTypeEnum() {
     return DayOffTypeEnum;
   }
-  deleteDayOff(dayOff: DayOff): void {}
+  public get CollaboratorRoleEnum() {
+    return CollaboratorRoleEnum;
+  }
+  acceptDayOff(dayOff: DayOff): void {
+    let dayOffToChange = this.setDayOffToChange(dayOff,DayOffStatusEnum.VALIDATED)
+    this.dayOffService.createDayOff(dayOffToChange).subscribe(response => {
+      this.notifierService.notify(
+        NotificationType.SUCCESS,
+        'Cette demande d\'absence a été validé'
+      )
+      this.ngOnInit()
+    },
+    (error:HttpErrorResponse) => {
+      this.sendErrorNotification(NotificationType.ERROR, error.error.text)
+    })
+  }
+  refuseDayOff(dayOff: DayOff): void {
+    let dayOffToChange = this.setDayOffToChange(dayOff,DayOffStatusEnum.REJECTED)
+    this.dayOffService.createDayOff(dayOffToChange).subscribe(response => {
+      this.notifierService.notify(
+        NotificationType.SUCCESS,
+        'Cette demande d\'absence a été refusé'
+      )
+      this.ngOnInit()
+    },
+    (error:HttpErrorResponse) => {
+      this.sendErrorNotification(NotificationType.ERROR, error.error.text)
+    })
+  }
+  setDayOffToChange(dayOff: DayOff,status: DayOffStatusEnum) : DayOff {
+    let dayOffToChange : DayOff = {
+      id : dayOff.id,
+      requestDate: dayOff.requestDate,
+      startDate: dayOff.startDate,
+      endDate: dayOff.endDate,
+      type: dayOff.type,
+      reason : dayOff.reason,
+      status : status,
+      collaborators: dayOff.collaborators
+    }
+    return dayOffToChange
+  }
+  deleteDayOff(dayOff: DayOff): void {
+    this.dayOffService.deleteDayOff(dayOff).subscribe(response => {
+      this.notifierService.notify(
+        NotificationType.SUCCESS,
+        'Votre jour de congé a été supprimé'
+      )
+      this.ngOnInit()
+    },
+    (error:HttpErrorResponse) => {
+      this.sendErrorNotification(NotificationType.ERROR, error.error.text)
+    })
+  }
 }
