@@ -17,4 +17,7 @@ export class DayOffService {
   deleteDayOff(dayOff:DayOff) {
     return this.http.post<string>(environment.urlResourceDeleteDayOff, dayOff)
   }
+  findDayOff(id:number) {
+    return this.http.get<DayOff>(environment.urlResourceFindDayOff)
+  }
 }

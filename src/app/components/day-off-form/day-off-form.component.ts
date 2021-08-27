@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -10,9 +10,12 @@ import { NotifierService } from 'angular-notifier';
 import { CollaboratorRoleEnum } from 'src/app/enum/collaborator-role-enum';
 import { NotificationType } from 'src/app/enum/notification-type.enum';
 import { HttpErrorResponse } from '@angular/common/http';
-import { DayOffToCreate } from 'src/app/model/dayOff';
+import { DayOff, DayOffToCreate } from 'src/app/model/dayOff';
 import { DayOffTypeEnum } from 'src/app/enum/dayoff-type-enum';
 import * as moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
+import { map, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -33,9 +36,10 @@ export class DayOffFormComponent {
     year: this.current.getFullYear(), month:
       this.current.getMonth() + 1, day: this.current.getDate() + 1
   };
-
+  @Input() dayOff?:DayOff;
   constructor(private modalService: NgbModal, private fb: FormBuilder,
      private config: NgbDatepickerConfig, private dayOffService: DayOffService,
+     private route: ActivatedRoute,
      private notifierService: NotifierService, private userService: UserService) {
     config.outsideDays = 'hidden';
   }
@@ -96,7 +100,8 @@ export class DayOffFormComponent {
   }
 
   open(content: any) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+    const modalRef = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+    modalRef.componentInstance.dayOff = 'dayOff'; 
   }
 
   resetDayOffForm() {
