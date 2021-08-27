@@ -133,7 +133,7 @@ export class HistoComponent implements OnInit {
   lineChartOptions = {
     responsive: true,
     scales: {
-      yAxes: [{id: 'y-axis-1', type: 'linear', position: 'left', ticks: {min: 0, max: 100}, backgroundColor: 'pink'}]
+      yAxes: [{id: 'y-axis-1', type: 'linear', position: 'left', ticks: {min: 0}, backgroundColor: 'pink'}]
     }
   };
 
