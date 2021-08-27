@@ -24,7 +24,7 @@ interface CollaboratorCalendar extends Collaborator {
 })
 export class CalendarComponent implements OnInit {
   // Mois actuellement visionner qui va permettre de lancer les fonctions permettant de changer le mois affiché
-  currentMonth!: number;
+  currentMonth = moment().month();
   // Mois actuellement visionner affiché dans l'entête du calendrier
   currentMonthLetter!: string;
   // Année actuellement visionner affiché dans l'entête du calendrier
@@ -48,13 +48,14 @@ export class CalendarComponent implements OnInit {
     // Récupération des collaborators du département d'un Manager et lancement de la fonction permettant d'initialiser le calendrier
     this.userService.getCollaborator().subscribe((collaborator) => {
       this.collaborator = collaborator;
+      console.log(this.collaborator)
       if (this.collaborator?.role === CollaboratorRoleEnum.MANAGER) {
         this.userService.getCollaborators().subscribe((collaborators) => {
           this.collaborators = collaborators;
-          this.getDaysArrayByMonth(moment().month());
+          this.getDaysArrayByMonth(this.currentMonth);
         });
       } else {
-        this.getDaysArrayByMonth(moment().month());
+        this.getDaysArrayByMonth(this.currentMonth);
       }
     });
   }
@@ -157,6 +158,8 @@ export class CalendarComponent implements OnInit {
         }
       }
       this.collaboratorsCalendar.push(collabCalendar);
+      console.log(this.collaboratorsCalendar);
+      
     }
   }
 
