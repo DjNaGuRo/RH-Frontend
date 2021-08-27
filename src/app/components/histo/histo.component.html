@@ -7,7 +7,7 @@
       <input type="checkbox" (click)="getGraphByYear(currentYear)"> Suivant &#8250;
     </label>
   </div>
-  <h1 class="text-center">Histogramme</h1>
+  <h1 class="text-center" [class.spinner]="isFinished">Histogramme</h1>
   <div class="year">{{currentYear - 1}}</div>
 
   <div class="chart-wrapper">
