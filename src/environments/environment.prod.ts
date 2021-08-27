@@ -6,3 +6,4 @@ export const environment = {
   urlResourceCollaborator: `${baseUrlApi}/collaborator`,
   apiUrl: 'https://rhmanagement.herokuapp.com/'
 };
+//f1bce54a-dce0-4050-8193-6f190adadfb8
