@@ -22,6 +22,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { ChartsModule } from 'ng2-charts';
 import { HistoComponent } from './components/histo/histo.component';
+import { LegendeComponent } from './components/legende/legende.component';
 
 
 
@@ -34,7 +35,8 @@ import { HistoComponent } from './components/histo/histo.component';
     LoginComponent,
     CalendarComponent,
     HistoComponent,
-    DayOffFormComponent
+    DayOffFormComponent,
+    LegendeComponent
   ],
   imports: [
     BrowserModule,

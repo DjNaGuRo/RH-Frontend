@@ -109,3 +109,28 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.INITIAL {
+  background-color: blue;
+}
+.WAITING_FOR_VALIDATION {
+  background-color: orange;
+}
+.VALIDATED {
+  background-color: green;
+}
+.REJECTED {
+  background-color: red;
+}
+
+.box {
+  float: left;
+  height: 20px;
+  width: 20px;
+  border: 1px solid black;
+  clear: both;
+}
+
+.puce{
+  list-style-type: none;
+}
