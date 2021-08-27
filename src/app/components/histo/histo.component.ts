@@ -6,8 +6,8 @@ import {ChartDataSets, ChartType} from 'chart.js';
 import {Component, OnInit} from '@angular/core';
 import {Color, Label} from 'ng2-charts';
 import * as moment from 'moment';
-import {DayOff} from '../../model/dayOff';
 import {DayOffTypeEnum} from '../../enum/dayoff-type-enum';
+import { DayOff } from 'src/app/model/dayOff';
 
 interface DayOffMonths {
   type: DayOffTypeEnum;
