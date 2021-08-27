@@ -8,8 +8,9 @@
       <input type="checkbox" (click)="getDaysArrayByMonth(currentMonth)"> Suivant
     </label>
   </div>
-  <div class="table-responsive col-12 container-fluid">
+  <div class="table-responsive col-12 container-fluid" #slider (mousedown) ="mousedown($event)" (mouseup) ="mouseup($event)" (mouseleave) ="mouseleave($event)" (mousemove)="mousemove($event)">
     <table class="table table-bordered border-dark" title="Collaborator Days Off">
+      
       <thead class="table-primary">
         <tr>
           <th scope="col">Nom employé</th>
@@ -31,7 +32,7 @@
           <td *ngFor="let dayOff of collaboratorCalendar.daysOffMonth" class="dayOffTd">
             <div *ngIf="dayOff">
               <div class="col"
-                *ngIf="(dayOff.type === DayOffTypeEnum.RTTS || dayOff.type === DayOffTypeEnum.CSS || dayOff.type === DayOffTypeEnum.CP) && (collaborator!.role === CollaboratorRoleEnum.ADMINISTRATOR || collaborator!.role === CollaboratorRoleEnum.EMPLOYE)">
+                *ngIf="(dayOff.type === DayOffTypeEnum.RTTS || dayOff.type === DayOffTypeEnum.CSS || dayOff.type === DayOffTypeEnum.CP) && (collaborator!.role === CollaboratorRoleEnum.ADMINISTRATOR || collaborator!.role === CollaboratorRoleEnum.EMPLOYE) && dayOffOwner(dayOff)">
                 <div ngbDropdown container="body" class="d-inline-block">
                   <button class="{{dayOff.status}} btn btn-primary" id="dropdownBasic1" data-toggle="tooltip"
                     data-placement="top" title="{{dayOff.reason}}" ngbDropdownToggle>{{dayOff.type}}</button>
@@ -53,7 +54,7 @@
                       <button ngbDropdownItem (click)="refuseDayOff(dayOff)">Refuser</button>
                     </div>
                     <div
-                      *ngIf="dayOff.status == DayOffStatusEnum.INITIAL || dayOff.status == DayOffStatusEnum.REJECTED">
+                      *ngIf="(dayOff.status == DayOffStatusEnum.INITIAL || dayOff.status == DayOffStatusEnum.REJECTED)  && (dayOffOwner(dayOff))">
                       <button ngbDropdownItem>Modifier</button>
                       <button ngbDropdownItem (click)="deleteDayOff(dayOff)">Supprimer</button>
                     </div>

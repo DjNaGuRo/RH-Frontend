@@ -1,6 +1,6 @@
 import { DayOffStatusEnum } from './../../enum/dayoff-status-enum';
 import { CollaboratorRoleEnum } from './../../enum/collaborator-role-enum';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { Collaborator } from 'src/app/model/collaborator';
 import { DayOff } from 'src/app/model/dayOff';
@@ -23,6 +23,10 @@ interface CollaboratorCalendar extends Collaborator {
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
+  isDown = false;
+  startX:any;
+  scrollLeft:any;
+  @ViewChild('slider') slider!: ElementRef;
   // Mois actuellement visionner qui va permettre de lancer les fonctions permettant de changer le mois affiché
   currentMonth = moment().month();
   // Mois actuellement visionner affiché dans l'entête du calendrier
@@ -59,6 +63,7 @@ export class CalendarComponent implements OnInit {
       }
     });
   }
+  
   private sendErrorNotification(
     notificationType: NotificationType,
     message: string
@@ -247,5 +252,36 @@ export class CalendarComponent implements OnInit {
     (error:HttpErrorResponse) => {
       this.sendErrorNotification(NotificationType.ERROR, error.error.text)
     })
+  }
+  dayOffOwner(dayOff: DayOff) : boolean {
+    for (const collabDayOff of this.collaborator!.daysOffs) {
+      if (collabDayOff.id === dayOff.id) {
+        console.log("owner");
+        
+        return true
+      }
+    }
+    return false
+  }
+  mousedown(e: MouseEvent) {
+    this.isDown = true;
+    this.slider.nativeElement.classList.add('active');
+    this.startX = e.pageX - this.slider.nativeElement.offsetLeft;
+    this.scrollLeft = this.slider.nativeElement.scrollLeft;
+  }
+  mouseleave(e: MouseEvent) {
+    this.isDown = false;
+    this.slider.nativeElement.classList.remove('active');
+  }
+  mouseup(e: MouseEvent) {
+    this.isDown = false;
+    this.slider.nativeElement.classList.remove('active');
+  }
+  mousemove(e: MouseEvent) {
+    if (!this.isDown) return;
+    e.preventDefault();
+    const x = e.pageX - this.slider.nativeElement.offsetLeft;
+    const walk = (x - this.startX) * 3; //scroll-fast
+    this.slider.nativeElement.scrollLeft = this.scrollLeft - walk;
   }
 }

@@ -1,5 +1,5 @@
 import {Collaborator} from 'src/app/model/collaborator';
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {CollaboratorRoleEnum} from "../../enum/collaborator-role-enum";
 
@@ -11,7 +11,7 @@ import {CollaboratorRoleEnum} from "../../enum/collaborator-role-enum";
 export class HomeComponent implements OnInit {
   user!: Collaborator;
   authorize = true;
-
+  
   constructor(private authService: AuthService) {
   }
 
