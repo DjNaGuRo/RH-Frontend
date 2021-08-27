@@ -9,8 +9,7 @@
     </label>
   </div>
   <div class="table-responsive col-12 container-fluid">
-
-    <table class="table table-bordered border-dark ">
+    <table class="table table-bordered border-dark" title="Collaborator Days Off">
       <thead class="table-primary">
         <tr>
           <th scope="col">Nom employé</th>
@@ -32,7 +31,7 @@
           <td *ngFor="let dayOff of collaboratorCalendar.daysOffMonth" class="dayOffTd">
             <div *ngIf="dayOff">
               <div class="col"
-                *ngIf="(dayOff.type === DayOffTypeEnum.RTTS || dayOff.type === DayOffTypeEnum.CSS || dayOff.type === DayOffTypeEnum.CP) && collaborator!.role === (CollaboratorRoleEnum.ADMINISTRATOR || collaborator!.role === CollaboratorRoleEnum.EMPLOYE)">
+                *ngIf="(dayOff.type === DayOffTypeEnum.RTTS || dayOff.type === DayOffTypeEnum.CSS || dayOff.type === DayOffTypeEnum.CP) && (collaborator!.role === CollaboratorRoleEnum.ADMINISTRATOR || collaborator!.role === CollaboratorRoleEnum.EMPLOYE)">
                 <div ngbDropdown container="body" class="d-inline-block">
                   <button class="{{dayOff.status}} btn btn-primary" id="dropdownBasic1" data-toggle="tooltip"
                     data-placement="top" title="{{dayOff.reason}}" ngbDropdownToggle>{{dayOff.type}}</button>
