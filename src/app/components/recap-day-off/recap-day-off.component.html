@@ -1,3 +1,4 @@
+
 <table class="table table-striped">
     <thead>
     <tr>
@@ -8,7 +9,6 @@
     </thead>
     <tbody>
     <tr *ngFor="let ligne of lignes; index as i">
-      <th scope="row">{{ i + 1 }}</th>
       <td>{{ ligne.dayOffType }}</td>
       <td>{{ ligne.pris | number }}</td>
       <td>{{ ligne.restant | number }}</td>
