@@ -18,8 +18,22 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getUserFromLocalCache();
     // @ts-ignore
-    if (this.user.role !== CollaboratorRoleEnum[CollaboratorRoleEnum.MANAGER]) {
+    if (this.user.role !== CollaboratorRoleEnum.MANAGER) {
       this.authorize = false;
     }
+  }
+
+  get isAdmin(): boolean {
+    if (this.user.role === CollaboratorRoleEnum.ADMINISTRATOR) {
+      return true;
+    }
+    return false;
+  }
+
+  get isManager(): boolean {
+    if (this.user.role === CollaboratorRoleEnum.MANAGER) {
+      return true;
+    }
+    return false;
   }
 }
