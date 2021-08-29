@@ -21,6 +21,8 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
 
 import { ChartsModule } from 'ng2-charts';
 
+import { LegendeComponent } from './components/legende/legende.component';
+
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 
 
@@ -37,9 +39,9 @@ import { RecapDayOffComponent } from './components/recap-day-off/recap-day-off.c
     LoginComponent,
     CalendarComponent,
     HistoComponent,
-
     DayOffFormComponent,
-    RecapDayOffComponent
+    RecapDayOffComponent,
+    LegendeComponent
   ],
   imports: [
     BrowserModule,

@@ -43,15 +43,18 @@ export class CalendarComponent implements OnInit {
   // Initialisation du calendrier permettant l'affichage des jours de congés de chaques employés
   collaboratorsCalendar: CollaboratorCalendar[] = [];
   dayOffForm?: FormGroup;
+  subject = new Subject<DayOff>();
 
   setDayOff(value: DayOff) {
     let splitDateStart = value.startDate.split('/');
-    let dateDayOff = moment(splitDateStart[2] + '-' + splitDateStart[1] + '-' + splitDateStart[0]);
+    let dateDayOffStart = moment(splitDateStart[2] + '-' + splitDateStart[1] + '-' + splitDateStart[0]);
+    let splitDateEnd = value.startDate.split('/');
+    let dateDayOffEnd = moment(splitDateEnd[2] + '-' + splitDateEnd[1] + '-' + splitDateEnd[0]);
     this.dayOffForm = new FormGroup({
       dayoff: FormBuilderDayoff.getDayoff({
         type: value.type,
-        startDate: moment(dateDayOff).format("YYYY-MM-DD"),
-        endDate: value.endDate,
+        startDate: moment(dateDayOffStart).format("YYYY-MM-DD"),
+        endDate: moment(dateDayOffEnd).format("YYYY-MM-DD"),
         reason: value.reason
       })
     })
@@ -59,10 +62,14 @@ export class CalendarComponent implements OnInit {
   }
 
   openModal(dayOff: DayOff) {
+    this.subject.next(dayOff);
+    this.subject.asObservable().subscribe((v)=>{
+      console.log(v)
+    })
     let splitDateStart = dayOff.startDate.split('/');
     let dateDayOffStart = moment(splitDateStart[2] + '-' + splitDateStart[1] + '-' + splitDateStart[0]);
     let splitDateEnd = dayOff.startDate.split('/');
-    let dateDayOffEnd = moment(splitDateStart[2] + '-' + splitDateStart[1] + '-' + splitDateStart[0]);
+    let dateDayOffEnd = moment(splitDateEnd[2] + '-' + splitDateEnd[1] + '-' + splitDateEnd[0]);
     this.setDayOff(dayOff);
     let data = {
       type: dayOff.type,
@@ -72,7 +79,10 @@ export class CalendarComponent implements OnInit {
     }
     const modalRef = this.modalService.open(DayOffFormComponent);
     modalRef.componentInstance.fromParent = data
-    console.log(modalRef.result)
+    this.dayOffForm?.patchValue({
+      startDate:data.startDate,
+      reason:data.reason
+    })
     modalRef.result.then((result) => {
         console.log(result)
       },

@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h4 class="modal-title" id="modal-basic-title">Nouvelle demande d'absence</h4>
   <button type="button" class="close" aria-label="Close"
-          (click)="resetDayOffForm()">
+          (click)="close()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -27,7 +27,8 @@
     <div class="form-group">
       <label for="startDate">Date de début</label>
       <div class="input-group">
-        <input required id="startDate" class="form-control" placeholder="yyyy-mm-dd" formControlName="startDate" [value]="fromParent?.startDate"
+        <input required id="startDate" class="form-control" placeholder="yyyy-mm-dd" formControlName="startDate"
+               [value]="fromParent?.startDate"
                [readonly]="true" ngbDatepicker #startDate="ngbDatepicker" [minDate]="minDate" [maxDate]="maxStartDate">
 
         <div *ngIf="DayOffTypeIsValid">
@@ -66,10 +67,7 @@
         </div>
 
       </div>
-    </div>
 
-
-    <div class="form-group">
       <label for="endtDate">Date de fin</label>
       <div class="input-group">
         <input required id="endtDate" class="form-control" placeholder="yyyy-mm-dd" formControlName="endDate"
@@ -112,10 +110,8 @@
 
       </div>
     </div>
-    <!-- <p *ngIf="isEndDateAvailable" class="error-message">
-  Vous devez choisir une date de début
-</p> -->
-    {{fromParent?.reason}}
+
+
     <div class="form-floating">
       <label for="reason">Motif :</label>
       <textarea class="form-control" id="reason" placeholder="Motif de votre absence (facultatif)"

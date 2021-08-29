@@ -1,0 +1,11 @@
+<div class="legende">
+  <div id=legende>
+    <ng-template #popTemplate>Légende des congés :
+      <div [innerHtml]="html" id="content"></div>
+    </ng-template>
+    <a id="popTemplate" type="link" mdbBtn color="success" mdbPopoverHeader="Dynamic html     inside"
+       triggers="mouseenter:mouseleave" [ngbPopover]="popTemplate" mdbWavesEffect>
+      Légende
+    </a>
+  </div>
+</div>

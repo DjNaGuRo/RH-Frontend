@@ -113,8 +113,9 @@ export class DayOffFormComponent {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
   }*/
 
-  resetDayOffForm() {
+  close(){
     this.dayOffForm.reset();
+    this.modalService.dismissAll()
   }
 
   sendForm($event: any) {
@@ -130,7 +131,7 @@ export class DayOffFormComponent {
           this.notifierService.notify(NotificationType.SUCCESS, "Votre demande a été prise en compte");
         },
         (error: HttpErrorResponse) => this.notifierService.notify(NotificationType.ERROR, error.error.text));
-    this.resetDayOffForm();
+    this.close();
   }
 
   formateDayOff(): DayOffToCreate {
