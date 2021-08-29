@@ -23,6 +23,8 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { ChartsModule } from 'ng2-charts';
 import { HistoComponent } from './components/histo/histo.component';
 
+import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
+
 
 
 @NgModule({
@@ -43,10 +45,12 @@ import { HistoComponent } from './components/histo/histo.component';
     HttpClientModule,
     MatProgressBarModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     BrowserAnimationsModule,
     NotificationModule,
     ChartsModule,
+
+    ModalModule.forRoot(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -54,6 +58,7 @@ import { HistoComponent } from './components/histo/histo.component';
     AuthService,
     UserService,
     NotificationService,
+    BsModalRef,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
@@ -61,5 +66,6 @@ import { HistoComponent } from './components/histo/histo.component';
     },
   ],
   bootstrap: [AppComponent],
+  entryComponents:[DayOffFormComponent]
 })
 export class AppModule {}

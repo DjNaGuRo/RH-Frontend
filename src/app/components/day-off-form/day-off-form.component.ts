@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
-import { NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, Input, OnInit} from '@angular/core';
+import {NgbActiveModal, NgbDatepickerConfig, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
-import { Collaborator } from 'src/app/model/collaborator';
-import { UserService } from 'src/app/services/user.service';
-import { DayOffService } from 'src/app/services/day-off.service';
-import { NotifierService } from 'angular-notifier';
-import { CollaboratorRoleEnum } from 'src/app/enum/collaborator-role-enum';
-import { NotificationType } from 'src/app/enum/notification-type.enum';
-import { HttpErrorResponse } from '@angular/common/http';
-import { DayOffToCreate } from 'src/app/model/dayOff';
-import { DayOffTypeEnum } from 'src/app/enum/dayoff-type-enum';
+import {Collaborator} from 'src/app/model/collaborator';
+import {UserService} from 'src/app/services/user.service';
+import {DayOffService} from 'src/app/services/day-off.service';
+import {NotifierService} from 'angular-notifier';
+import {CollaboratorRoleEnum} from 'src/app/enum/collaborator-role-enum';
+import {NotificationType} from 'src/app/enum/notification-type.enum';
+import {HttpErrorResponse} from '@angular/common/http';
+import {DayOff, DayOffToCreate} from 'src/app/model/dayOff';
+import {DayOffTypeEnum} from 'src/app/enum/dayoff-type-enum';
 import * as moment from 'moment';
+import {FormBuilderDayoff} from "../../model/form-builder-dayoff";
 
 
 @Component({
@@ -21,12 +22,18 @@ import * as moment from 'moment';
   styleUrls: ['./day-off-form.component.scss']
 })
 
-export class DayOffFormComponent {
+export class DayOffFormComponent{
   minEndDate!: NgbDateStruct;
   maxStartDate!: NgbDateStruct;
   dayOffForm!: FormGroup;
+
+  @Input() fromParent: any;
+
   selectedValue = "CP";
   collaborator?: Collaborator;
+
+
+  @Input() myModalProperty!: string;
 
   current = new Date();
   minDate: NgbDateStruct = {
@@ -35,8 +42,8 @@ export class DayOffFormComponent {
   };
 
   constructor(private modalService: NgbModal, private fb: FormBuilder,
-     private config: NgbDatepickerConfig, private dayOffService: DayOffService,
-     private notifierService: NotifierService, private userService: UserService) {
+              private config: NgbDatepickerConfig, private dayOffService: DayOffService,
+              private notifierService: NotifierService, private userService: UserService,public activeModal: NgbActiveModal) {
     config.outsideDays = 'hidden';
   }
 
@@ -49,18 +56,19 @@ export class DayOffFormComponent {
         'endDate': ['', [Validators.required]],
         'reason': ['', [Validators.required, Validators.minLength(4)]],
       }, {
-      updateOn: 'blur'
-    });
+        updateOn: 'blur'
+      });
     this.dayOffForm.get('startDate')?.valueChanges.subscribe(startDate => this.minEndDate = startDate);
     this.dayOffForm.get('endDate')?.valueChanges.subscribe(endDate => this.maxStartDate = endDate);
 
     this.userService.getCollaborator().subscribe(collaborator => {
-      this.collaborator = collaborator
-    }
-  )}
+        this.collaborator = collaborator
+      }
+    )
+  }
 
   // Vérifier le rôle de l'utilisateur pour donner accès au jours férié et RTTE dans le formulaire
-  get administrator(){
+  get administrator() {
     if (this.collaborator?.role.toString() === CollaboratorRoleEnum[CollaboratorRoleEnum.ADMINISTRATOR]) {
       return true;
     } else {
@@ -73,21 +81,25 @@ export class DayOffFormComponent {
       this.dayOffForm.get('dayOffType')?.valid
     )
   }
+
   get DayOffTypeIsInvalid() {
     return (
       this.dayOffForm.get('dayOffType')?.invalid
     )
   }
+
   get StartDateIsValid() {
     return (
       this.dayOffForm.get('startDate')?.valid
     )
   }
+
   get StartDateIsInvalid() {
     return (
       this.dayOffForm.get('startDate')?.invalid
     )
   }
+
   get reasonIsInvalid() {
     return (
       this.dayOffForm.get('reason')?.invalid &&
@@ -95,9 +107,9 @@ export class DayOffFormComponent {
     )
   }
 
-  open(content: any) {
+  /*open(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-  }
+  }*/
 
   resetDayOffForm() {
     this.dayOffForm.reset();
@@ -115,11 +127,11 @@ export class DayOffFormComponent {
           this.modalService.dismissAll();
           this.notifierService.notify(NotificationType.SUCCESS, "Votre demande a été prise en compte");
         },
-      (error : HttpErrorResponse)=>this.notifierService.notify(NotificationType.ERROR, error.error.text));
+        (error: HttpErrorResponse) => this.notifierService.notify(NotificationType.ERROR, error.error.text));
     this.resetDayOffForm();
   }
 
-  formateDayOff (): DayOffToCreate {
+  formateDayOff(): DayOffToCreate {
     let dayOffTypeToCreate: DayOffTypeEnum = this.dayOffForm.get('dayOffType')?.value;
     console.log(dayOffTypeToCreate);
 

@@ -37,7 +37,7 @@
                     data-placement="top" title="{{dayOff.reason}}" ngbDropdownToggle>{{dayOff.type}}</button>
                   <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="text-light"
                     *ngIf="dayOff.status == DayOffStatusEnum.INITIAL || dayOff.status == DayOffStatusEnum.REJECTED">
-                    <button ngbDropdownItem>Modifier</button>
+                    <button ngbDropdownItem (click)="openModal(dayOff)">Modifieffr</button>
                     <button ngbDropdownItem (click)="deleteDayOff(dayOff)">Supprimer</button>
                   </div>
                 </div>
@@ -52,9 +52,8 @@
                       <button ngbDropdownItem (click)="acceptDayOff(dayOff)">Accepter</button>
                       <button ngbDropdownItem (click)="refuseDayOff(dayOff)">Refuser</button>
                     </div>
-                    <div
-                      *ngIf="dayOff.status == DayOffStatusEnum.INITIAL || dayOff.status == DayOffStatusEnum.REJECTED">
-                      <button ngbDropdownItem>Modifier</button>
+                    <div *ngIf="dayOff.status == DayOffStatusEnum.INITIAL || dayOff.status == DayOffStatusEnum.REJECTED">
+                      <button ngbDropdownItem (click)="openModal(dayOff)">Modifffffier</button>
                       <button ngbDropdownItem (click)="deleteDayOff(dayOff)">Supprimer</button>
                     </div>
                   </div>
@@ -72,7 +71,7 @@
                     data-placement="top" title="{{dayOff.reason}}" ngbDropdownToggle>{{dayOff.type}}</button>
                   <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="text-light"
                     *ngIf="dayOff.status == DayOffStatusEnum.INITIAL || dayOff.status == DayOffStatusEnum.REJECTED">
-                    <button ngbDropdownItem>Modifier</button>
+                    <button ngbDropdownItem (click)="openModal(dayOff)">Modifier</button>
                     <button ngbDropdownItem (click)="deleteDayOff(dayOff)">Supprimer</button>
                   </div>
                 </div>
