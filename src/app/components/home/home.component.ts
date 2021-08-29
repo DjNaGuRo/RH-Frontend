@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
     modalRef.componentInstance.confirmationMessage = 'Do you want to cancel?';
 
     modalRef.result.then((userResponse) => {
-      console.log(`User's choice: ${userResponse}`)
+
     });  }
   ngOnInit(): void {
     this.user = this.authService.getUserFromLocalCache();

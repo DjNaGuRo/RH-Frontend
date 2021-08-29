@@ -136,12 +136,12 @@ export class DayOffFormComponent {
 
   formateDayOff(): DayOffToCreate {
     let dayOffTypeToCreate: DayOffTypeEnum = this.dayOffForm.get('dayOffType')?.value;
-    console.log(dayOffTypeToCreate);
+
 
     let startDateFormValue = this.dayOffForm.get('startDate')?.value;
     let startDateFormat = new Date(startDateFormValue.year, startDateFormValue.month - 1, startDateFormValue.day);
     let startDateToCreate = moment(startDateFormat).format('DD/MM/YYYY');
-    console.log(startDateToCreate)
+
 
     let endDateFormValue = this.dayOffForm.get('endDate')?.value;
     let endDateFormat = new Date(endDateFormValue.year, endDateFormValue.month - 1, endDateFormValue.day);

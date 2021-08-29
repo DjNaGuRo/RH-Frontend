@@ -207,7 +207,7 @@ export class CalendarComponent implements OnInit {
         }
       }
       this.collaboratorsCalendar.push(collabCalendar);
-      console.log(this.collaboratorsCalendar);
+
 
     }
   }

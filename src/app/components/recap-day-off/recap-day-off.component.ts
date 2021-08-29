@@ -46,8 +46,7 @@ export class RecapDayOffComponent implements OnInit {
       let momentVariableEnd = moment(endDateString, 'DD/MM/YYYY');
       let stringvalue2 = momentVariableEnd.format('YYYY-MM-DD');
       let dateEndDate = new Date(stringvalue2);
-      console.log("nombre de jour de congé : ");
-      console.log(momentVariableStart.diff(momentVariableEnd));
+
 
     }
     console.log ("recherche de daysOffs : ");
