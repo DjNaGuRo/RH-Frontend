@@ -44,6 +44,7 @@ export class CalendarComponent implements OnInit {
   collaboratorsCalendar: CollaboratorCalendar[] = [];
   dayOffForm?: FormGroup;
   subject = new Subject<DayOff>();
+  fromParent!:DayOff;
 
   setDayOff(value: DayOff) {
     let splitDateStart = value.startDate.split('/');
@@ -62,10 +63,7 @@ export class CalendarComponent implements OnInit {
   }
 
   openModal(dayOff: DayOff) {
-    this.subject.next(dayOff);
-    this.subject.asObservable().subscribe((v)=>{
-      console.log(v)
-    })
+
     let splitDateStart = dayOff.startDate.split('/');
     let dateDayOffStart = moment(splitDateStart[2] + '-' + splitDateStart[1] + '-' + splitDateStart[0]);
     let splitDateEnd = dayOff.startDate.split('/');
@@ -77,18 +75,9 @@ export class CalendarComponent implements OnInit {
       endDate: moment(dateDayOffEnd).format("YYYY-MM-DD"),
       reason: dayOff.reason
     }
-    const modalRef = this.modalService.open(DayOffFormComponent);
-    modalRef.componentInstance.fromParent = data
-    this.dayOffForm?.patchValue({
-      startDate:data.startDate,
-      reason:data.reason
-    })
-    modalRef.result.then((result) => {
-        console.log(result)
-      },
-      (reason) => {
-        console.log(reason);
-      })
+    const modal: NgbModalRef = this.modalService.open(DayOffFormComponent, { backdrop: "static" });
+    const modalComponent: DayOffFormComponent = modal.componentInstance;
+    modalComponent.fromParent = data;
 
   }
 

@@ -28,7 +28,6 @@
       <label for="startDate">Date de début</label>
       <div class="input-group">
         <input required id="startDate" class="form-control" placeholder="yyyy-mm-dd" formControlName="startDate"
-               [value]="fromParent?.startDate"
                [readonly]="true" ngbDatepicker #startDate="ngbDatepicker" [minDate]="minDate" [maxDate]="maxStartDate">
 
         <div *ngIf="DayOffTypeIsValid">
@@ -114,8 +113,8 @@
 
     <div class="form-floating">
       <label for="reason">Motif :</label>
-      <textarea class="form-control" id="reason" placeholder="Motif de votre absence (facultatif)"
-                formControlName="reason" >test</textarea>
+      <textarea  class="form-control" id="reason" placeholder="Motif de votre absence (facultatif)"
+                formControlName="reason" ></textarea>
     </div>
     <p *ngIf="reasonIsInvalid" class="error-message">
       Vous devez renseigner un motif de minimum 4 caractères
