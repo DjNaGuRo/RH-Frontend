@@ -1,0 +1,17 @@
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Visualisation des absences</th>
+      <th scope="col">pris</th>
+      <th scope="col">restant</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ligne of lignes; index as i">
+      <td>{{ ligne.dayOffType }}</td>
+      <td>{{ ligne.pris | number }}</td>
+      <td>{{ ligne.restant | number }}</td>
+    </tr>
+    </tbody>
+  </table>

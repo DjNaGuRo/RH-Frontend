@@ -1,3 +1,9 @@
-<day-off-form></day-off-form>
+
+<button class="btn btn-outline-primary btn-left" (click)="openModal()">Nouvelle demande
+  d'absence</button>
+
+<app-legende></app-legende>
 <app-calendar></app-calendar>
+<app-recap-day-off></app-recap-day-off>
+
 <app-histo *ngIf="isManager"></app-histo>

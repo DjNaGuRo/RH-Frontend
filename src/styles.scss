@@ -4,12 +4,8 @@
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 @import "~angular-notifier/styles";
-
-
-html, body {
+body {
   font-size: 0.875rem;
-  height: 100%;
-  margin: 0;
 }
 
 .feather {
@@ -112,4 +108,30 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.INITIAL {
+  background-color: blue;
+}
+.WAITING_FOR_VALIDATION {
+  background-color: orange;
+}
+.VALIDATED {
+  background-color: green;
+}
+.REJECTED {
+  background-color: red;
+}
+
+.box {
+  float: left;
+  height: 18px;
+  width: 18px;
+  border: 1px solid black;
+  clear: both;
+  margin-right: 10px;
+}
+
+.puce{
+  list-style-type: none;
 }

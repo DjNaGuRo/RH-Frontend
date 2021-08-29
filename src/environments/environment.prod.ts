@@ -1,4 +1,4 @@
-const baseUrlApi = 'https://rhmanagement.herokuapp.com';
+const baseUrlApi = 'https://rhmanagement.herokuapp.com/';
 export const environment = {
   production: true,
   baseUrlApi,
