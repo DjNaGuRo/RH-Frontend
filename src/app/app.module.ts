@@ -1,4 +1,3 @@
-import { DayOffFormComponent } from './components/day-off-form/day-off-form.component';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NotificationModule } from './notification.module';
@@ -17,16 +16,18 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './components/login/login.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+
 import { ChartsModule } from 'ng2-charts';
-import { HistoComponent } from './components/histo/histo.component';
 
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 
 
-
+import {HistoComponent} from "./components/histo/histo.component";
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { DayOffFormComponent } from './components/day-off-form/day-off-form.component';
+import { RecapDayOffComponent } from './components/recap-day-off/recap-day-off.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,9 @@ import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
     LoginComponent,
     CalendarComponent,
     HistoComponent,
-    DayOffFormComponent
+
+    DayOffFormComponent,
+    RecapDayOffComponent
   ],
   imports: [
     BrowserModule,

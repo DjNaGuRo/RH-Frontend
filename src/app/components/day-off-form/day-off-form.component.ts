@@ -22,9 +22,10 @@ import {FormBuilderDayoff} from "../../model/form-builder-dayoff";
   styleUrls: ['./day-off-form.component.scss']
 })
 
-export class DayOffFormComponent{
-  minEndDate!: NgbDateStruct;
-  maxStartDate!: NgbDateStruct;
+
+export class DayOffFormComponent {
+  minEndDate!: NgbDateStruct; // Permettre l'accès à des dates futures et non des dates passées
+  maxStartDate!: NgbDateStruct; // Empêcher
   dayOffForm!: FormGroup;
 
   @Input() fromParent: any;
@@ -45,8 +46,9 @@ export class DayOffFormComponent{
               private config: NgbDatepickerConfig, private dayOffService: DayOffService,
               private notifierService: NotifierService, private userService: UserService,public activeModal: NgbActiveModal) {
     config.outsideDays = 'hidden';
+    config.showWeekNumbers = true;
+    config.weekdays = false;
   }
-
 
   ngOnInit(): void {
     this.dayOffForm = this.fb.group(
@@ -138,6 +140,7 @@ export class DayOffFormComponent{
     let startDateFormValue = this.dayOffForm.get('startDate')?.value;
     let startDateFormat = new Date(startDateFormValue.year, startDateFormValue.month - 1, startDateFormValue.day);
     let startDateToCreate = moment(startDateFormat).format('DD/MM/YYYY');
+    console.log(startDateToCreate)
 
     let endDateFormValue = this.dayOffForm.get('endDate')?.value;
     let endDateFormat = new Date(endDateFormValue.year, endDateFormValue.month - 1, endDateFormValue.day);
