@@ -42,6 +42,8 @@ export class CalendarComponent implements OnInit {
   collaborator?: Collaborator;
   // Initialisation du calendrier permettant l'affichage des jours de congés de chaques employés
   collaboratorsCalendar: CollaboratorCalendar[] = [];
+
+  
   dayOffForm?: FormGroup;
   subject = new Subject<DayOff>();
   fromParent!:DayOff;
