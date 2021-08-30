@@ -13,6 +13,7 @@ import { NotificationType } from 'src/app/enum/notification-type.enum';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   NgbActiveModal,
+  NgbDateStruct,
   NgbModal,
   NgbModalRef,
 } from '@ng-bootstrap/ng-bootstrap';
@@ -55,10 +56,11 @@ export class CalendarComponent implements OnInit {
   collaborator?: Collaborator;
   // Initialisation du calendrier permettant l'affichage des jours de congés de chaques employés
   collaboratorsCalendar: CollaboratorCalendar[] = [];
-
+  minEndDate!: NgbDateStruct;
   dayOffForm?: FormGroup;
   subject = new Subject<DayOff>();
   fromParent!: DayOff;
+  selectedValue?: string;
 
   setDayOff(value: DayOff) {
     let splitDateStart = value.startDate.split('/');
@@ -89,19 +91,29 @@ export class CalendarComponent implements OnInit {
     let dateDayOffEnd = moment(
       splitDateEnd[2] + '-' + splitDateEnd[1] + '-' + splitDateEnd[0]
     );
-    this.setDayOff(dayOff);
+    //this.setDayOff(dayOff);
     let data = {
       type: dayOff.type,
       startDate: moment(dateDayOffStart).format('YYYY-MM-DD'),
       endDate: moment(dateDayOffEnd).format('YYYY-MM-DD'),
       reason: dayOff.reason,
     };
+    this.dayOffForm = this.fb.group(
+      {
+        dayOffType: [data.type, [Validators.required]],
+        startDate: [data.startDate, [Validators.required]],
+        endDate: [data.endDate, [Validators.required]],
+        reason: [data.reason, [Validators.required, Validators.minLength(4)]],
+      },
+      {
+        updateOn: 'blur',
+      }
+    );
     const modal: NgbModalRef = this.modalService.open(DayOffFormComponent, {
       backdrop: 'static',
     });
     const modalComponent: DayOffFormComponent = modal.componentInstance;
     modalComponent.fromParent = data;
-    console.log(modalComponent.fromParent);
   }
 
   constructor(

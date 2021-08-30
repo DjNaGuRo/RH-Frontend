@@ -6,7 +6,6 @@
 </div>
 
 <div class="modal-body">
-  {{fromParent|json}}
   <form [formGroup]="dayOffForm">
     <label for="dayOffType">Type de congé</label><br>
     <select class="form-select" id="dayOffType" formControlName="dayOffType" aria-label="Default select example"
@@ -26,8 +25,11 @@
     <div class="form-group">
       <label for="startDate">Date de début</label>
       <div class="input-group">
-        <input required id="startDate" class="form-control" placeholder="yyyy-mm-dd" formControlName="startDate"
+        
+        <input  required id="startDate" class="form-control" placeholder="yyyy-mm-dd"
+          formControlName="startDate"
           [readonly]="true" ngbDatepicker #startDate="ngbDatepicker" [minDate]="minDate" [maxDate]="maxStartDate">
+
 
         <div *ngIf="DayOffTypeIsValid">
           <div class="input-group-append">
@@ -45,7 +47,6 @@
             </button>
           </div>
         </div>
-
         <div *ngIf="DayOffTypeIsInvalid">
           <div class="input-group-append" placement="left"
             ngbTooltip="Vous devez d'abord selectionner un type de congé">
