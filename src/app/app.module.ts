@@ -18,12 +18,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './components/login/login.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+
+import { ChartsModule } from 'ng2-charts';
+
+import { LegendeComponent } from './components/legende/legende.component';
+
+import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
+
+
 import {HistoComponent} from "./components/histo/histo.component";
-import {ChartsModule} from "ng2-charts";
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { DayOffFormComponent } from './components/day-off-form/day-off-form.component';
 import { RecapDayOffComponent } from './components/recap-day-off/recap-day-off.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +40,8 @@ import { RecapDayOffComponent } from './components/recap-day-off/recap-day-off.c
     CalendarComponent,
     HistoComponent,
     DayOffFormComponent,
-    RecapDayOffComponent
+    RecapDayOffComponent,
+    LegendeComponent
   ],
   imports: [
     BrowserModule,
@@ -43,10 +50,11 @@ import { RecapDayOffComponent } from './components/recap-day-off/recap-day-off.c
     HttpClientModule,
     MatProgressBarModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     BrowserAnimationsModule,
     NotificationModule,
     ChartsModule,
+    ModalModule.forRoot(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -54,6 +62,7 @@ import { RecapDayOffComponent } from './components/recap-day-off/recap-day-off.c
     AuthService,
     UserService,
     NotificationService,
+    BsModalRef,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
@@ -61,5 +70,6 @@ import { RecapDayOffComponent } from './components/recap-day-off/recap-day-off.c
     },
   ],
   bootstrap: [AppComponent],
+  entryComponents:[DayOffFormComponent]
 })
 export class AppModule {}

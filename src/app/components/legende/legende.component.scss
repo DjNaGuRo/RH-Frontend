@@ -1,0 +1,16 @@
+#legende {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  margin-right: 50px;
+  margin-bottom: 20px;
+}
+
+.legende{
+  cursor: pointer;
+  text-align: right;
+  width: 250px;
+  position: absolute;
+  top: 150px;
+  right: 0;
+}

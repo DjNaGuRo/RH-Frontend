@@ -6,11 +6,13 @@ import {ChartDataSets, ChartType} from 'chart.js';
 import {Component, OnInit} from '@angular/core';
 import {Color, Label} from 'ng2-charts';
 import * as moment from 'moment';
-import {CollaboratorRoleEnum} from "../../enum/collaborator-role-enum";
-import {createLogErrorHandler} from "@angular/compiler-cli/ngcc/src/execution/tasks/completion";
-import {filter, map, tap} from "rxjs/operators";
-import {DayOff} from "../../model/dayOff";
-import {DaysOff} from "../../model/daysOff";
+import {DayOffTypeEnum} from '../../enum/dayoff-type-enum';
+import { DayOff } from 'src/app/model/dayOff';
+
+interface DayOffMonths {
+  type: DayOffTypeEnum;
+  dayOffs: DayOff[];
+}
 
 @Component({
   selector: 'app-histo',
@@ -23,6 +25,9 @@ export class HistoComponent implements OnInit {
   collaborators: any = [];
   subscriptions: Subscription[] = [];
   user?: Collaborator;
+  lineChartData: ChartDataSets[] = [];
+  lineChartColors: Color[] = [];
+  isFinished = false;
 
   constructor(
     private histoService: HistoService,
@@ -31,65 +36,107 @@ export class HistoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.user = this.authService.getUserFromLocalCache();
-
-
     this.getGraphByYear(moment().year());
+    this.isFinished = false;
   }
 
+  //Fonction qui sert :
+  // On veut récupérer les jours posés dans l'année choisi variable : yearChoice
   getGraphByYear(yearChoice: number) {
+    this.lineChartData = [];
+    this.isFinished = true;
+    //Suivant précédent, stock la variable pour définir en quel année nous sommes
     this.currentYear < yearChoice
       ? (this.currentYear -= 1)
       : (this.currentYear += 1);
-    this.histoService.getAllDayOff().pipe(
-      map((collaborators: Collaborator[]) => collaborators.map((c: Collaborator) => c.daysOffs.filter((d:DayOff) =>{
-        let splitDateStart = d.startDate.split("/");
-        let dateDayOff = moment(splitDateStart[2]+'-'+splitDateStart[1]+'-'+splitDateStart[0]).locale("fr").format("YYYY");
-        let currentDate = parseInt(String(this.currentYear));
-        let dateActual = moment(currentDate+'-01-01').format("YYYY");
-        return dateDayOff == dateActual;
-      })))
-    ).subscribe(result => console.log(result));
-    /*this.histoService.getAllDayOff().subscribe((collab) => {
-      this.collaborators = collab;
-      collab.map((collaborator)=>{
-        collaborator.daysOffs.map((dayOffs)=> console.log(dayOffs.startDate)).filter((date)=>console.log(date))
-      })
-    });*/
 
+    //define date actual pas with button "prev/next"
+    let currentDate = parseInt(String(this.currentYear));
+    let dateActual = moment(currentDate + '-01-01').subtract(1, 'year').format('YYYY');
+
+    //define array of type DaysOff
+    const types = [DayOffTypeEnum.CP, DayOffTypeEnum.RTTE, DayOffTypeEnum.RTTS, DayOffTypeEnum.CSS, DayOffTypeEnum.F];
+
+    //init object lineDataChart
+    for (const t of types) {
+      this.lineChartData.push({data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], label: t});
+    }
+
+    //get all collab with dayOff
+    this.histoService.getAllDayOff()
+      .subscribe(collaborators => {
+
+        //deefine color for graph
+        this.lineChartColors = [
+          {
+            borderColor: '#7385C7',
+            backgroundColor: '#9B97C4',
+          }, {
+            borderColor: '#293F94',
+            backgroundColor: '#AAB6FA',
+          }, {
+            borderColor: '#AAE5FA',
+            backgroundColor: '#D6E5F7',
+          }, {
+            borderColor: '#FBA16C',
+            backgroundColor: '#F8CC9A',
+          }, {
+            borderColor: '#C78673',
+            backgroundColor: '#C4A897',
+          }
+        ];
+
+        for (const c of collaborators) {
+
+          for (const d of c.daysOffs) {
+            // get date in database and transform in year
+            let splitDateStart = d.startDate.split('/');
+            let dateDayOff = moment(splitDateStart[2] + '-' + splitDateStart[1] + '-' + splitDateStart[0]);
+            let dateDayOffYear = dateDayOff.format('YYYY');
+
+
+            if (dateActual === dateDayOffYear) {
+
+              // find type if same label increment graph line
+              const chartSet = this.lineChartData.find(l => l.label === d.type);
+              if (chartSet?.data) {
+                if (chartSet.data[dateDayOff.month()] != undefined) {
+                  const nb = <number>chartSet.data[dateDayOff.month()];
+                  chartSet.data[dateDayOff.month()] = nb + 1;
+                }
+              }
+            }
+          }
+        }
+        this.isFinished = false;
+      });
   }
 
-  lineChartData: ChartDataSets[] = [
-    {data: [85, 72, 78, 75, 77, 75], label: 'RTT'},
-    {data: [25, 45, 46, 79, 95, 58], label: 'CP'},
-  ];
+  /**
+   * get all month in year
+   */
+  getMonths() {
+    moment.locale('fr');
+    let arrayMonths = [];
 
-  lineChartLabels: Label[] = [
-    'Janvier',
-    'Fevrier',
-    'Mars',
-    'Avril',
-    'Mai',
-    'Juin',
-    'Juillet',
-    'Aout',
-    'Septembre',
-    'Octobre',
-    'Novembre',
-    'Decembre',
-  ];
+    for (let i = 0; i < moment.months().length; i++) {
+
+      arrayMonths.push(moment.months()[i]);
+    }
+    return arrayMonths;
+  }
+
+  lineChartLabels: Label[] = this.getMonths();
+
 
   lineChartOptions = {
     responsive: true,
+    scales: {
+      yAxes: [{id: 'y-axis-1', type: 'linear', position: 'left', ticks: {min: 0}, backgroundColor: 'pink'}]
+    }
   };
 
-  lineChartColors: Color[] = [
-    {
-      borderColor: 'black',
-      backgroundColor: 'rgba(255,255,0,0.28)',
-    },
-  ];
 
   lineChartLegend = true;
   lineChartPlugins = [];

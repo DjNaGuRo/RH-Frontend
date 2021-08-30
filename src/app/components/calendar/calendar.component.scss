@@ -1,12 +1,19 @@
-.INITIAL {
-  background-color: blue;
+.calendary {
+  margin-top: 2vw;
+  margin-bottom: 2vw;
 }
-.WAITING_FOR_VALIDATION {
-  background-color: orange;
+.table-primary, .table-primary > th, .table-primary > td {
+    background-color: #80d0f0;
 }
-.VALIDATED {
-  background-color: green;
+.table.active {
+  background: rgba(255,255,255,0.3);
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+  transform: scale(1);
 }
-.REJECTED {
-  background-color: red;
+.table-responsive {
+  cursor: grab;
+}
+.table-responsive button {
+  cursor: pointer;
 }
