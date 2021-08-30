@@ -22,32 +22,21 @@ interface Day {
 })
 
 export class RecapDayOffComponent implements OnInit {
-  collaborator!: Collaborator;
-  daysOff?: DayOff[];
+  collaborator?: Collaborator;
   totalRTTE?= 5
-  nbRTTE?: Day[];
   totalRTTS?= 6
-  nbRTTS?: Day[];
-  nbCSS?: Day[];
   totalCP?= 25
   totalCSS?: number
 
   constructor(private userService: UserService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.userService.getCollaborator().subscribe(collaborator => {
-      this.collaborator = collaborator;
-      this.daysOff = collaborator.daysOffs;
-      // let total days
-
-      console.log("recherche de daysOffs : ");
-      console.log(this.collaborator?.daysOffs);
-    })
-
+    this.collaborator = this.authService.getUserFromLocalCache();
+    this.calculateDaysOff()
   }
 
-  calculateDaysOff(daysOff: DayOff[]) {
-    for (const day of daysOff) {
+  calculateDaysOff() {
+    for (const day of this.collaborator!.daysOffs) {
       let startDateString = day.startDate
       let momentVariableStart = moment(startDateString, 'DD/MM/YYYY');
       let stringvalue = momentVariableStart.format('YYYY-MM-DD');
@@ -58,6 +47,10 @@ export class RecapDayOffComponent implements OnInit {
       // let dateEndDate = new Date(stringvalue2);
       // let daysCount = momentVariableEnd.diff(momentVariableStart, 'days')+1;
       let workingDays = this.calculateBusinessDays(momentVariableStart, momentVariableEnd);
+      console.log(day);
+      console.log(workingDays);
+
+
       switch (day.type) {
         case DayOffTypeEnum.CP:
           this.totalCP! -= workingDays

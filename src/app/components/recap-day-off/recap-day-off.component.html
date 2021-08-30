@@ -1,15 +1,12 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">Visualisation des absences</th>
-      <th scope="col">pris</th>
-      <th scope="col">restant</th>
+      <th scope="col">Visualisation des absences restantes</th>
     </tr>
   </thead>
   <tbody>
-      <h3>Nombres de jours restant</h3>
         <tr>
-          <td *ngIf="collaborator.role === CollaboratorRoleEnum.ADMINISTRATOR">RTTE : {{totalRTTE}}</td>
+          <td *ngIf="collaborator?.role === CollaboratorRoleEnum.ADMINISTRATOR">RTTE : {{totalRTTE}}</td>
           <td>RTTS : {{totalRTTS}}</td>
           <td>CP : {{totalCP}}</td>
           <td>CSS : {{totalCSS || 0}}</td>

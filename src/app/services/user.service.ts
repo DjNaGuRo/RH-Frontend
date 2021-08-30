@@ -11,7 +11,7 @@ import {tap} from "rxjs/operators";
 })
 export class UserService {
   private collaborators?:Collaborator[]
-  private collaborator?: Collaborator
+  collaborator?: Collaborator
 
   constructor(private http:HttpClient) {
   }
