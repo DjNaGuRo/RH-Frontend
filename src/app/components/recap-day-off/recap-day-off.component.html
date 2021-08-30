@@ -1,17 +1,18 @@
-
 <table class="table table-striped">
-    <thead>
+  <thead>
     <tr>
       <th scope="col">Visualisation des absences</th>
       <th scope="col">pris</th>
       <th scope="col">restant</th>
     </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let ligne of lignes; index as i">
-      <td>{{ ligne.dayOffType }}</td>
-      <td>{{ ligne.pris | number }}</td>
-      <td>{{ ligne.restant | number }}</td>
-    </tr>
-    </tbody>
-  </table>
+  </thead>
+  <tbody>
+      <h3>Nombres de jours restant</h3>
+        <tr>
+          <td *ngIf="collaborator.role === CollaboratorRoleEnum.ADMINISTRATOR">RTTE : {{totalRTTE}}</td>
+          <td>RTTS : {{totalRTTS}}</td>
+          <td>CP : {{totalCP}}</td>
+          <td>CSS : {{totalCSS || 0}}</td>
+        </tr>
+  </tbody>
+</table>
