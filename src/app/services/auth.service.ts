@@ -26,7 +26,6 @@ export class AuthService {
    * @returns
    */
   public login(user: Collaborator): Observable<HttpResponse<Collaborator>> {
-    console.log(user);
 
     return this.http.post<Collaborator>(`${this.host}/auth/login`, user, {
       observe: 'response',

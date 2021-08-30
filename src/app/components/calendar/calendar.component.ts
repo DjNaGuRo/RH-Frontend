@@ -126,6 +126,20 @@ export class CalendarComponent implements OnInit {
       }
     });
   }
+  refresh(currentMonth:number) {
+    // Récupération des collaborators du département d'un Manager et lancement de la fonction permettant d'initialiser le calendrier
+    this.userService.getCollaborator().subscribe((collaborator) => {
+      this.collaborator = collaborator;
+      if (this.collaborator?.role === CollaboratorRoleEnum.MANAGER) {
+        this.userService.getCollaborators().subscribe((collaborators) => {
+          this.collaborators = collaborators;
+          this.getDaysArrayByMonth(currentMonth);
+        });
+      } else {
+        this.getDaysArrayByMonth(currentMonth);
+      }
+    });
+  }
 
   private sendErrorNotification(
     notificationType: NotificationType,
@@ -280,7 +294,7 @@ export class CalendarComponent implements OnInit {
           NotificationType.SUCCESS,
           "Cette demande d'absence a été validé"
         );
-        this.ngOnInit();
+        this.refresh(this.currentMonth-1);
       },
       (error: HttpErrorResponse) => {
         this.sendErrorNotification(NotificationType.ERROR, error.error.text);
@@ -299,7 +313,7 @@ export class CalendarComponent implements OnInit {
           NotificationType.SUCCESS,
           "Cette demande d'absence a été refusé"
         );
-        this.ngOnInit();
+        this.refresh(this.currentMonth-1);
       },
       (error: HttpErrorResponse) => {
         this.sendErrorNotification(NotificationType.ERROR, error.error.text);
@@ -328,7 +342,7 @@ export class CalendarComponent implements OnInit {
           NotificationType.SUCCESS,
           'Votre jour de congé a été supprimé'
         );
-        this.ngOnInit();
+        this.refresh(this.currentMonth-1);
       },
       (error: HttpErrorResponse) => {
         this.sendErrorNotification(NotificationType.ERROR, error.error.text);
