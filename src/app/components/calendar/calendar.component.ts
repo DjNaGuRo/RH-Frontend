@@ -101,6 +101,7 @@ export class CalendarComponent implements OnInit {
     });
     const modalComponent: DayOffFormComponent = modal.componentInstance;
     modalComponent.fromParent = data;
+    console.log(modalComponent.fromParent);
   }
 
   constructor(
