@@ -21,10 +21,6 @@ export class HomeComponent implements OnInit {
 
   openModal() {
     const modalRef = this.modalService.open(DayOffFormComponent);
-
-    modalRef.result.then((userResponse) => {
-      console.log(`User's choice: ${userResponse}`);
-    });
   }
   ngOnInit(): void {
     this.user = this.authService.getUserFromLocalCache();

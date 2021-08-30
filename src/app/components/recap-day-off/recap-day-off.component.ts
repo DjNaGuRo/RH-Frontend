@@ -47,8 +47,6 @@ export class RecapDayOffComponent implements OnInit {
       // let dateEndDate = new Date(stringvalue2);
       // let daysCount = momentVariableEnd.diff(momentVariableStart, 'days')+1;
       let workingDays = this.calculateBusinessDays(momentVariableStart, momentVariableEnd);
-      console.log(day);
-      console.log(workingDays);
 
 
       switch (day.type) {
@@ -86,7 +84,6 @@ export class RecapDayOffComponent implements OnInit {
         if (day === 0) sundays++;
       }
     }
-    console.log("Total Days:", days, "workingDays", workingDays, "saturdays", saturdays, "sundays", sundays);
     return workingDays;
   }
 

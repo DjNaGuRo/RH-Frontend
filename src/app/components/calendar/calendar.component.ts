@@ -101,7 +101,6 @@ export class CalendarComponent implements OnInit {
     });
     const modalComponent: DayOffFormComponent = modal.componentInstance;
     modalComponent.fromParent = data;
-    console.log(modalComponent.fromParent);
   }
 
   constructor(
@@ -353,8 +352,6 @@ export class CalendarComponent implements OnInit {
   dayOffOwner(dayOff: DayOff): boolean {
     for (const collabDayOff of this.collaborator!.daysOffs) {
       if (collabDayOff.id === dayOff.id) {
-        console.log('owner');
-
         return true;
       }
     }
