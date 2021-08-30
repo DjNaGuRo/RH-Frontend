@@ -8,8 +8,8 @@
       <input type="checkbox" (click)="getDaysArrayByMonth(currentMonth)"> Suivant
     </label>
   </div>
-  <div class="table-responsive col-12 container-fluid">
-    <table class="table table-bordered border-dark" title="Collaborator Days Off">
+  <div class="table-responsive col-12 container-fluid" #slider (mousedown) ="mousedown($event)" (mouseup) ="mouseup($event)" (mouseleave) ="mouseleave($event)" (mousemove)="mousemove($event)">
+    <table class="table table-bordered border-dark" title="Collaborator Days Off" >
       <thead class="table-primary">
       <tr>
         <th scope="col">Nom employé</th>
