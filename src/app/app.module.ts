@@ -54,7 +54,6 @@ import { RecapDayOffComponent } from './components/recap-day-off/recap-day-off.c
     BrowserAnimationsModule,
     NotificationModule,
     ChartsModule,
-
     ModalModule.forRoot(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
