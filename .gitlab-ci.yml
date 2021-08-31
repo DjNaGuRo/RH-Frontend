@@ -3,6 +3,7 @@ image: node:12.19.0
 stages:
   - build
   - deploy
+  - others
 
 cache:
   paths:
