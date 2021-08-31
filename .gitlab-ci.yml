@@ -30,7 +30,6 @@ npm_scripts:
     # - for script in ${NPM_SCRIPTS//;/ } ; do
     # -    npm run $script
     # - done
-    - rest=$STR
     - while [ -n "$NPM_SCRIPTS" ] ; do
     -   str=${NPM_SCRIPTS%%;*}
     -   [ "$NPM_SCRIPTS" = "${NPM_SCRIPTS/;/}" ] && NPM_SCRIPTS= || NPM_SCRIPTS=${NPM_SCRIPTS#*;}
