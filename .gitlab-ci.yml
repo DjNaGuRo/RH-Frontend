@@ -23,7 +23,8 @@ npm_scripts:
   stage: others
   variables:
     PROJECT_ROOT: "."
-    NPM_SCRIPTS: "build;ng lint"
+    NPM_SCRIPTS_OPTION: "lint"
+    NPM_SCRIPTS: "build;ng $NPM_SCRIPTS_OPTION"
     NPM_OUTPUT: "public"
   script:
     - cd $PROJECT_ROOT
