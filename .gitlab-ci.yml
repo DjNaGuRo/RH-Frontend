@@ -27,10 +27,12 @@ npm_scripts:
     NPM_OUTPUT: "public"
   script:
     - cd $PROJECT_ROOT
+    - oldIFS=$IFS
     - export IFS=";"
     - for script in $NPM_SCRIPTS; do
     -   npm run $script
     - done
+    - IFS=$oldIFS
     - mkdir $NPM_OUTPUT
     - cp -R dist/ui/* public
   artifacts:
