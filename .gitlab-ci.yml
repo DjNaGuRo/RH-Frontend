@@ -32,8 +32,7 @@ npm_scripts:
     # - done
     - while [ -n "$NPM_SCRIPTS" ] ; do
     -   str=${NPM_SCRIPTS%%;*}
-    -   [ "$NPM_SCRIPTS" = "${NPM_SCRIPTS/;/}" ] && NPM_SCRIPTS= || NPM_SCRIPTS=${NPM_SCRIPTS#*;}
-    -   echo "+ \"$NPM_SCRIPTS\""
+    -   [ "$NPM_SCRIPTS" = "${NPM_SCRIPTS/;/}" ] && NPM_SCRIPTS= || NPM_SCRIPTS=${NPM_SCRIPTS#*;} echo "+ \"$NPM_SCRIPTS\""
     - done
     - mkdir $NPM_OUTPUT
     - cp -R dist/ui/* public
