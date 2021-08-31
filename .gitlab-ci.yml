@@ -30,9 +30,10 @@ npm_scripts:
     - oldIFS=$IFS
     - export IFS=";"
     - for script in $NPM_SCRIPTS; do
+    -   IFS=$oldIFS
     -   npm run $script
+        export IFS=";"
     - done
-    - IFS=$oldIFS
     - mkdir $NPM_OUTPUT
     - cp -R dist/ui/* public
   artifacts:
