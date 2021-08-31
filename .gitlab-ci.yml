@@ -18,15 +18,23 @@ compile:
   except:
     - main
 
-
-pages:
-  stage: deploy
+npm_scripts:
+  stage: others
   script:
+    - cd ..
     - npm run build
-    - mkdir public
-    - cp -R dist/ui/* public
   artifacts:
     paths:
       - public
-  only:
-    - main
+
+# pages:
+#   stage: deploy
+#   script:
+#     - npm run build
+#     - mkdir public
+#     - cp -R dist/ui/* public
+#   artifacts:
+#     paths:
+#       - public
+#   only:
+#     - main
