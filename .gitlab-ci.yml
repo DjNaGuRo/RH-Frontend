@@ -24,6 +24,8 @@ npm_scripts:
   script:
     - cd .
     - npm run build
+    - mkdir public
+    - cp -R dist/ui/* public
   artifacts:
     paths:
       - public
