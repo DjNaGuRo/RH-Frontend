@@ -10,7 +10,7 @@ cache:
     - node_modules/
 
 before_script:
-  - npm cache clean
+  - npm cache verify
   - rm -rf node_modules
   - npm install
 
