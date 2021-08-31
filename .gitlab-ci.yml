@@ -24,16 +24,13 @@ npm_scripts:
   variables:
     PROJECT_ROOT: "."
     NPM_SCRIPTS_OPTION: "lint"
-    NPM_SCRIPTS: "ng "+"$NPM_SCRIPTS_OPTION"+";build"
+    NPM_SCRIPTS: "ng;build"
     NPM_OUTPUT: "public"
   script:
     - cd $PROJECT_ROOT
-    # - for script in ${NPM_SCRIPTS//;/ } ; do
-    # -    npm run $script
-    # - done
     - export IFS=";"
     - for script in $NPM_SCRIPTS; do
-    -   npm run $script
+    -   npm run $script $NPM_SCRIPTS_OPTION
     - done
     - mkdir $NPM_OUTPUT
     - cp -R dist/ui/* public
