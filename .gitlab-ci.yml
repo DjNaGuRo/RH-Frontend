@@ -25,7 +25,7 @@ npm_scripts:
   stage: others
   variables:
     PROJECT_ROOT: "."
-    NPM_SCRIPTS: 'build;ng lint'
+    NPM_SCRIPTS: 'build;ng analytics ci'
     NPM_OUTPUT: "public"
   script:
     - cd $PROJECT_ROOT
