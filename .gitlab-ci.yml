@@ -30,9 +30,10 @@ npm_scripts:
     # - for script in ${NPM_SCRIPTS//;/ } ; do
     # -    npm run $script
     # - done
-    - while [ -n "$NPM_SCRIPTS" ] ; do
-    -   str=${NPM_SCRIPTS%%;*}
-    -   [ "$NPM_SCRIPTS" = "${NPM_SCRIPTS/;/}" ] && NPM_SCRIPTS= || NPM_SCRIPTS=${NPM_SCRIPTS#*;} echo "+ \"$NPM_SCRIPTS\""
+    - rest=$NPM_SCRIPTS
+    - while [ -n "$rest" ] ; do
+    -   str=${rest%%;*}
+    -   [ "$rest" = "${rest/;/}" ] && rest= || rest=${rest#*;} echo "+ \"$str\""
     - done
     - mkdir $NPM_OUTPUT
     - cp -R dist/ui/* public
