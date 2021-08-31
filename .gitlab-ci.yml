@@ -30,7 +30,7 @@ npm_scripts:
     - cd $PROJECT_ROOT
     - export IFS=";"
     - for script in $NPM_SCRIPTS; do
-    -   npm run $script and $NPM_SCRIPTS_OPTION
+    -   npm run $script ${NPM_SCRIPTS_OPTION}
     - done
     - mkdir $NPM_OUTPUT
     - cp -R dist/ui/* public
