@@ -22,7 +22,7 @@ compile:
 npm_scripts:
   stage: others
   script:
-    - cd ..
+    - cd .
     - npm run build
   artifacts:
     paths:
