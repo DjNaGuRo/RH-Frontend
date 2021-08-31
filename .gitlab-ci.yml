@@ -28,7 +28,7 @@ npm_scripts:
   script:
     - cd $PROJECT_ROOT
     - for script in ${NPM_SCRIPTS//;/ } ; do
-    -    npm run " \$script\";
+    -    npm run " \"$script\"";
     - done
     - mkdir $NPM_OUTPUT
     - cp -R dist/ui/* public
