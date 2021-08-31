@@ -10,6 +10,8 @@ cache:
     - node_modules/
 
 before_script:
+  - npm cache clean
+  - rm -rf node_modules
   - npm install
 
 compile:
@@ -23,7 +25,7 @@ npm_scripts:
   stage: others
   variables:
     PROJECT_ROOT: "."
-    NPM_SCRIPTS: 'ng lint;build'
+    NPM_SCRIPTS: 'build;ng lint'
     NPM_OUTPUT: "public"
   script:
     - cd $PROJECT_ROOT
