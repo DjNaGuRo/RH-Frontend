@@ -27,8 +27,14 @@ npm_scripts:
     NPM_OUTPUT: "public"
   script:
     - cd $PROJECT_ROOT
-    - for script in ${NPM_SCRIPTS//;/ } ; do
-    -    npm run $script
+    # - for script in ${NPM_SCRIPTS//;/ } ; do
+    # -    npm run $script
+    # - done
+    - rest=$STR
+    - while [ -n "$NPM_SCRIPTS" ] ; do
+    -   str=${NPM_SCRIPTS%%;*}
+    -   [ "$NPM_SCRIPTS" = "${NPM_SCRIPTS/;/}" ] && NPM_SCRIPTS= || NPM_SCRIPTS=${NPM_SCRIPTS#*;}
+    -   echo "+ \"$NPM_SCRIPTS\""
     - done
     - mkdir $NPM_OUTPUT
     - cp -R dist/ui/* public
