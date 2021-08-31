@@ -24,7 +24,7 @@ npm_scripts:
   variables:
     PROJECT_ROOT: "."
     NPM_SCRIPTS_OPTION: "lint"
-    NPM_SCRIPTS: "ng '$NPM_SCRIPTS_OPTION';build"
+    NPM_SCRIPTS: 'ng "$NPM_SCRIPTS_OPTION";build'
     NPM_OUTPUT: "public"
   script:
     - cd $PROJECT_ROOT
