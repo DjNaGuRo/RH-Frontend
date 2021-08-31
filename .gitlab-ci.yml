@@ -21,14 +21,20 @@ compile:
 
 npm_scripts:
   stage: others
+  variables:
+    PROJECT_ROOT: "."
+    NPM_SCRIPTS: "build;test"
+    NPM_OUTPUT: "public"
   script:
-    - cd .
-    - npm run build
-    - mkdir public
+    - cd $PROJECT_ROOT
+    - for script in ${NPM_SCRIPTS//;/ } ; do
+        npm run "+ \"$script\""
+      done
+    - mkdir $NPM_OUTPUT
     - cp -R dist/ui/* public
   artifacts:
     paths:
-      - public
+      - $NPM_OUTPUT
 
 # pages:
 #   stage: deploy
