@@ -32,7 +32,7 @@ npm_scripts:
     - for script in $NPM_SCRIPTS; do
     -   IFS=$oldIFS
     -   npm run $script
-        export IFS=";"
+    -   export IFS=";"
     - done
     - mkdir $NPM_OUTPUT
     - cp -R dist/ui/* public
