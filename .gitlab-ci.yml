@@ -10,8 +10,6 @@ cache:
     - node_modules/
 
 before_script:
-  - npm cache verify
-  - rm -rf node_modules
   - npm install
 
 compile:
@@ -36,8 +34,6 @@ npm_scripts:
     -   npm run $script
     -   export IFS=";"
     - done
-    - mkdir $NPM_OUTPUT
-    - cp -R dist/ui/* public
   artifacts:
     paths:
       - $NPM_OUTPUT
