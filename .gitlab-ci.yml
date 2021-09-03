@@ -16,6 +16,12 @@ cache:
 before_script:
   - npm install
 
+pages:
+  stage: deploy
+  variables:
+    PAGES_BUILD_PATH: "public"
+  script:
+    - mkdir public
 # compile:
 #   stage: build
 #   script:
