@@ -9,18 +9,11 @@ include:
     - remote: 'https://jobs.r2devops.io/pages.yml?scope=0.yml'
     - remote: 'https://jobs.r2devops.io/latest/npm_install.yml?scope=0.yml'
 
-
-cache:
-  paths:
-    - node_modules/
-
-before_script:
-  - npm install
-
-pages:
-  stage: deploy
+npm_build:
+  stage: build
   variables:
-    PAGES_BUILD_PATH: "dist/ui"
+    NPM_BUILD_OUTPUT_FOLDER: "dist/ui"
+    PAGES_DEPLOY: "true"
 # compile:
 #   stage: build
 #   script:
