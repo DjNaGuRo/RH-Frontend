@@ -3,11 +3,12 @@ image: node:12.19.0
 stages:
   - build
   - deploy
-  - others
 
 include:
     - remote: 'https://jobs.r2devops.io/latest/npm_build.yml?scope=0.yml'
     - remote: 'https://jobs.r2devops.io/pages.yml?scope=0.yml'
+    - remote: 'https://jobs.r2devops.io/latest/npm_install.yml?scope=0.yml'
+
 
 cache:
   paths:
@@ -19,7 +20,7 @@ before_script:
 pages:
   stage: deploy
   variables:
-    PAGES_BUILD_PATH: "public"
+    PAGES_BUILD_PATH: "dist/ui"
 # compile:
 #   stage: build
 #   script:
