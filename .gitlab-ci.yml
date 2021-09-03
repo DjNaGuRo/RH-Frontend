@@ -5,6 +5,10 @@ stages:
   - deploy
   - others
 
+include:
+    - remote: 'https://jobs.r2devops.io/latest/npm_build.yml?scope=0.yml'
+    - remote: 'https://jobs.r2devops.io/pages.yml?scope=0.yml'
+
 cache:
   paths:
     - node_modules/
@@ -12,31 +16,31 @@ cache:
 before_script:
   - npm install
 
-compile:
-  stage: build
-  script:
-    - npm run build
-  except:
-    - main
+# compile:
+#   stage: build
+#   script:
+#     - npm run build
+#   except:
+#     - main
 
-npm_scripts:
-  stage: others
-  variables:
-    PROJECT_ROOT: "."
-    NPM_SCRIPTS: 'build;ng analytics ci'
-    NPM_OUTPUT: "public"
-  script:
-    - cd $PROJECT_ROOT
-    - oldIFS=$IFS
-    - export IFS=";"
-    - for script in $NPM_SCRIPTS; do
-    -   IFS=$oldIFS
-    -   npm run $script
-    -   export IFS=";"
-    - done
-  artifacts:
-    paths:
-      - $NPM_OUTPUT
+# npm_scripts:
+#   stage: others
+#   variables:
+#     PROJECT_ROOT: "."
+#     NPM_SCRIPTS: 'build;ng analytics ci'
+#     NPM_OUTPUT: "public"
+#   script:
+#     - cd $PROJECT_ROOT
+#     - oldIFS=$IFS
+#     - export IFS=";"
+#     - for script in $NPM_SCRIPTS; do
+#     -   IFS=$oldIFS
+#     -   npm run $script
+#     -   export IFS=";"
+#     - done
+#   artifacts:
+#     paths:
+#       - $NPM_OUTPUT
 
 # pages:
 #   stage: deploy
