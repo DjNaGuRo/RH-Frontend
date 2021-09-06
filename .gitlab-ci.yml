@@ -1,19 +1,18 @@
 image: node:12.19.0
 
 stages:
-  - build
-  - deploy
+  - others
 
-include:
-    - remote: 'https://jobs.r2devops.io/latest/npm_build.yml?scope=0.yml'
-    - remote: 'https://jobs.r2devops.io/pages.yml?scope=0.yml'
-    - remote: 'https://jobs.r2devops.io/latest/npm_install.yml?scope=0.yml'
+# include:
+#     - remote: 'https://jobs.r2devops.io/latest/npm_build.yml?scope=0.yml'
+#     - remote: 'https://jobs.r2devops.io/pages.yml?scope=0.yml'
+#     - remote: 'https://jobs.r2devops.io/latest/npm_install.yml?scope=0.yml'
 
-npm_build:
-  stage: build
-  variables:
-    NPM_BUILD_OUTPUT_FOLDER: "dist/ui"
-    PAGES_DEPLOY: "true"
+# npm_build:
+#   stage: build
+#   variables:
+#     NPM_BUILD_OUTPUT_FOLDER: "dist/ui"
+#     PAGES_DEPLOY: "true"
 # compile:
 #   stage: build
 #   script:
@@ -21,24 +20,24 @@ npm_build:
 #   except:
 #     - main
 
-# npm_scripts:
-#   stage: others
-#   variables:
-#     PROJECT_ROOT: "."
-#     NPM_SCRIPTS: 'build;ng analytics ci'
-#     NPM_OUTPUT: "public"
-#   script:
-#     - cd $PROJECT_ROOT
-#     - oldIFS=$IFS
-#     - export IFS=";"
-#     - for script in $NPM_SCRIPTS; do
-#     -   IFS=$oldIFS
-#     -   npm run $script
-#     -   export IFS=";"
-#     - done
-#   artifacts:
-#     paths:
-#       - $NPM_OUTPUT
+npm_scripts:
+  stage: others
+  variables:
+    PROJECT_ROOT: "."
+    NPM_SCRIPTS: 'build;ng analytics ci'
+    NPM_OUTPUT: "public"
+  script:
+    - cd $PROJECT_ROOT
+    - oldIFS=$IFS
+    - export IFS=";"
+    - for script in $NPM_SCRIPTS; do
+    -   IFS=$oldIFS
+    -   npm run $script
+    -   export IFS=";"
+    - done
+  artifacts:
+    paths:
+      - $NPM_OUTPUT
 
 # pages:
 #   stage: deploy
