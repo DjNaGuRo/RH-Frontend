@@ -28,6 +28,7 @@ npm_scripts:
     NPM_OUTPUT: "public"
   script:
     - cd $PROJECT_ROOT
+    - npm install $NPM_INSTALL_OPTIONS
     - oldIFS=$IFS
     - export IFS=";"
     - for script in $NPM_SCRIPTS; do
