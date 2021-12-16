@@ -1,6 +1,7 @@
 image: node:12.19.0
 
 stages:
+  - dynamic_tests
   - others
 
 # include:
@@ -40,12 +41,26 @@ npm_scripts:
     paths:
       - $NPM_OUTPUT
 
+ng_e2e:
+    image: node:17-buster
+    stage: dynamic_tests
+    variables:
+      PROJECT_ROOT : '.'
+      PROJECT_NAME : ''
+      NG_E2E_PACKAGE : ''
+      NG_E2E_OPTIONS : ''
+
+    script:
+      - npm install
+      - ng e2e ${PROJECT_NAME} ${NG_E2E_OPTIONS}
+
 # pages:
 #   stage: deploy
 #   script:
 #     - npm run build
 #     - mkdir public
 #     - cp -R dist/ui/* public
+
 #   artifacts:
 #     paths:
 #       - public
