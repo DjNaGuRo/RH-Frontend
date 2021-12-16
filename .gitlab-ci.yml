@@ -4,23 +4,6 @@ stages:
   - dynamic_tests
   - others
 
-# include:
-#     - remote: 'https://jobs.r2devops.io/latest/npm_build.yml?scope=0.yml'
-#     - remote: 'https://jobs.r2devops.io/pages.yml?scope=0.yml'
-#     - remote: 'https://jobs.r2devops.io/latest/npm_install.yml?scope=0.yml'
-
-# npm_build:
-#   stage: build
-#   variables:
-#     NPM_BUILD_OUTPUT_FOLDER: "dist/ui"
-#     PAGES_DEPLOY: "true"
-# compile:
-#   stage: build
-#   script:
-#     - npm run build
-#   except:
-#     - main
-
 npm_scripts:
   stage: others
   variables:
@@ -54,15 +37,3 @@ ng_e2e:
       - npm install
       - ng e2e ${PROJECT_NAME} ${NG_E2E_OPTIONS}
 
-# pages:
-#   stage: deploy
-#   script:
-#     - npm run build
-#     - mkdir public
-#     - cp -R dist/ui/* public
-
-#   artifacts:
-#     paths:
-#       - public
-#   only:
-#     - main
