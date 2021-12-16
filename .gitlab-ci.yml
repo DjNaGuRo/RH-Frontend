@@ -42,7 +42,6 @@ npm_scripts:
       - $NPM_OUTPUT
 
 ng_e2e:
-    image: node:17-buster
     stage: dynamic_tests
     variables:
       PROJECT_ROOT : '.'
@@ -52,6 +51,7 @@ ng_e2e:
 
     script:
       - npm install
+      - npm i -g @angular/cli
       - ng e2e ${PROJECT_NAME} ${NG_E2E_OPTIONS}
 
 # pages:
