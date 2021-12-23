@@ -1,39 +1,7 @@
-image: node:16-buster
+include:
+  - local: "cypress_run.yml"
 
-stages:
-  - dynamic_tests
-  - others
-
-npm_scripts:
-  stage: others
-  variables:
-    PROJECT_ROOT: "."
-    NPM_SCRIPTS: 'build;ng analytics ci'
-    NPM_OUTPUT: "public"
-  script:
-    - cd $PROJECT_ROOT
-    - npm install $NPM_INSTALL_OPTIONS
-    - oldIFS=$IFS
-    - export IFS=";"
-    - for script in $NPM_SCRIPTS; do
-    -   IFS=$oldIFS
-    -   npm run $script
-    -   export IFS=";"
-    - done
-  artifacts:
-    paths:
-      - $NPM_OUTPUT
-
-ng_e2e:
-    stage: dynamic_tests
-    variables:
-      PROJECT_ROOT : '.'
-      PROJECT_NAME : ''
-      NG_E2E_PACKAGE : ''
-      NG_E2E_OPTIONS : ''
-
-    script:
-      - npm install
-      - npm i -g @angular/cli
-      - ng e2e ${PROJECT_NAME} ${NG_E2E_OPTIONS}
-
+variables:
+  #CYPRESS_RECORD_KEY : "e9f08bd1-5a27-4d31-b799-3d7d61068ce7"
+  CYPRESS_RECORDER : "junit"
+  CYPRESS_CONFIG_FILE : "manifest/cypress.json"
