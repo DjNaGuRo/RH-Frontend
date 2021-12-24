@@ -11,8 +11,8 @@ variables:
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - node_modules/
     - .npm/
+    - ~/.cache
 
 test:
   #image: cypress/browsers:node12.14.1-chrome85-ff81
@@ -21,7 +21,7 @@ test:
   stage: dynamic_tests
   script:
     # install dependencies
-    - npm install
+    - npm ci
     # install module wait-on to ensure that cypress will run after the serve start
     - npm i -g wait-on
     # start the server in the background and pause Cypress until the server is running
