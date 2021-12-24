@@ -5,3 +5,4 @@ variables:
   #CYPRESS_RECORD_KEY : "e9f08bd1-5a27-4d31-b799-3d7d61068ce7"
   CYPRESS_RECORDER : "junit"
   CYPRESS_CONFIG_FILE : "./manifest/cypress.json"
+  CYPRESS_BASE_URL : "http://localhost:4200"

@@ -5,7 +5,9 @@ variables:
   CYPRESS_PROJECT_PATH : "."
   CYPRESS_RECORD_KEY : ""
   CYPRESS_RECORDER : "spec"
+  CYPRESS_BASE_URL : ""
   ADDITIONAL_OPTIONS : ""
+
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
@@ -20,8 +22,10 @@ test:
   script:
     # install dependencies
     - npm install
+    # install module wait-on to ensure that cypress will run after the serve start
+    - npm i -g wait-on
     # start the server in the background
-    - npm start --no-clipboard &
+    - npm start --no-clipboard & wait-on ${CYPRESS_BASE_URL}
     # run Cypress tests
     #- npx cypress run --browser firefox
     # run Cypress tests
