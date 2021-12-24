@@ -24,7 +24,7 @@ test:
     - npm install
     # install module wait-on to ensure that cypress will run after the serve start
     - npm i -g wait-on
-    - echo Cypress.baseUrl
+    - echo ${Cypress.config('baseUrl')}
     # start the server in the background
     - npm start --no-clipboard & wait-on ${CYPRESS_BASE_URL}
     # run Cypress tests
