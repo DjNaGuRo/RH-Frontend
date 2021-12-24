@@ -21,7 +21,7 @@ test:
     # install dependencies
     - npm install
     # start the server in the background
-    - npm run start:ci &
+    - npm start --no-clipboard &
     # run Cypress tests
     #- npx cypress run --browser firefox
     # run Cypress tests
