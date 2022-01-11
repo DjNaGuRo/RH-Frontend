@@ -4,25 +4,31 @@ on:
   workflow_call:
     inputs:
       CYPRESS_CONFIG_FILE:
+        description: 'Path to a JSON  file where configuration values are set.'
         required: false
         type: string 
         default: ${{'cypress.json'}}
       CYPRESS_PROJECT_PATH: 
+        description: Path of project to run
         required: false
         type: string
         default: ${{'.'}}      
       CYPRESS_REPORTER:
+        description: Mocha reporter to use
         required: false
         type: string
         default: ${{ 'spec' }}
       CYPRESS_BASE_URL:
+        description: URl of the web server
         required: true
         type: string
       ADDITIONAL_OPTIONS: 
+        description: List of others options comma-seperated
         required: false
         type: string
     secrets:
       CYPRESS_RECORD_KEY: 
+        description: Cypress Dashboard record key.
         required: false
 jobs:
   reusable-cypress_run:
