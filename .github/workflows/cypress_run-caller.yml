@@ -2,7 +2,7 @@ name : Cypress run caller workflow
 on: push
 jobs:
   cypress_run-workflow:
-    uses: DjNaGuRo-R2/gh-reusableWorkflows/.github/workflows/gh-cypress_run.yml@main
+    uses: DjNaGuRo-R2/gh-reusableWorkflows/.github/workflows/gh-cypress_run@main
     with:
       CYPRESS_BASE_URL : http://localhost:4200
     secrets:
